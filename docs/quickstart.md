@@ -52,3 +52,32 @@ omicsmeta harmonize metadata.tsv \
   --unmapped unmapped.tsv \
   --report qc_report.html
 ```
+
+## Managed Ontology Resources
+
+List known resources and cache selected OBO files:
+
+```bash
+omicsmeta ontologies list
+omicsmeta ontologies download doid uberon cl
+```
+
+Build a SQLite synonym index from cached resources:
+
+```bash
+omicsmeta ontologies index --resource doid --resource uberon
+```
+
+Use cached resources during harmonization:
+
+```bash
+omicsmeta harmonize metadata.tsv \
+  --ontology-resource doid \
+  --ontology-resource uberon \
+  --output harmonized.tsv \
+  --unmapped unmapped.tsv \
+  --report qc_report.html
+```
+
+By default, resources are stored under `~/.cache/omicsmeta/ontologies`. Use
+`--ontology-cache-dir` or `--cache-dir` to choose another location.

@@ -48,9 +48,23 @@ omicsmeta harmonize metadata.tsv \
   --report qc_report.html
 ```
 
+Managed ontology resources can be cached locally:
+
+```bash
+omicsmeta ontologies list
+omicsmeta ontologies download doid uberon cl
+omicsmeta ontologies index --resource doid --resource uberon
+omicsmeta harmonize metadata.tsv \
+  --ontology-resource doid \
+  --ontology-resource uberon \
+  --output harmonized.tsv \
+  --unmapped unmapped.tsv \
+  --report qc_report.html
+```
+
 This repository is not yet JOSS-ready. The immediate next milestones are
-broader ontology resources, additional real-data integration tests, documentation, and
-benchmarking against `text2term` alone.
+additional real-data integration tests, sample-wide output tables, documentation,
+and benchmarking against `text2term` alone.
 
 Run tests locally with:
 
