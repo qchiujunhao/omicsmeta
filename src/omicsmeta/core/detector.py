@@ -10,29 +10,62 @@ from omicsmeta.core.normalizer import normalize_text
 from omicsmeta.core.types import FieldType
 
 
-FIELD_NAME_HINTS: dict[FieldType, tuple[str, ...]] = {
+@dataclass(frozen=True)
+class NameHint:
+    """A weighted column-name signal for field detection."""
+
+    text: str
+    weight: float
+
+
+FIELD_NAME_HINTS: dict[FieldType, tuple[NameHint, ...]] = {
     FieldType.DISEASE: (
-        "disease",
-        "diagnosis",
-        "phenotype",
-        "pathology",
-        "tumor type",
-        "tumour type",
-        "condition",
-        "cancer",
+        NameHint("disease state", 0.82),
+        NameHint("disease", 0.78),
+        NameHint("diagnosis", 0.78),
+        NameHint("pathology", 0.72),
+        NameHint("tumor type", 0.72),
+        NameHint("tumour type", 0.72),
+        NameHint("cancer", 0.72),
+        NameHint("condition", 0.48),
+        NameHint("phenotype", 0.24),
     ),
     FieldType.TISSUE: (
-        "tissue",
-        "organ",
-        "anatomy",
-        "body site",
-        "sample type",
+        NameHint("body site", 0.82),
+        NameHint("tissue", 0.78),
+        NameHint("organ", 0.72),
+        NameHint("anatomy", 0.72),
+        NameHint("sample type", 0.42),
     ),
-    FieldType.CELL_LINE: ("cell line", "cellline", "cell_line", "cell"),
-    FieldType.SEX: ("sex", "gender"),
-    FieldType.AGE: ("age", "age at", "developmental stage"),
-    FieldType.TREATMENT: ("treatment", "treated", "drug", "compound", "stimulus", "exposure"),
-    FieldType.SPECIES: ("species", "organism", "taxon", "taxid"),
+    FieldType.CELL_LINE: (
+        NameHint("cell line", 0.84),
+        NameHint("cellline", 0.84),
+        NameHint("cell_line", 0.84),
+        NameHint("cell", 0.35),
+    ),
+    FieldType.SEX: (
+        NameHint("sex", 0.84),
+        NameHint("gender", 0.84),
+    ),
+    FieldType.AGE: (
+        NameHint("age at", 0.84),
+        NameHint("age", 0.78),
+        NameHint("developmental stage", 0.48),
+    ),
+    FieldType.TREATMENT: (
+        NameHint("treatment", 0.84),
+        NameHint("treated", 0.72),
+        NameHint("drug", 0.72),
+        NameHint("compound", 0.72),
+        NameHint("stimulus", 0.72),
+        NameHint("exposure", 0.72),
+    ),
+    FieldType.SPECIES: (
+        NameHint("organism", 0.84),
+        NameHint("species", 0.78),
+        NameHint("taxon", 0.78),
+        NameHint("taxid", 0.78),
+    ),
 }
 
 SEX_VALUES = {"male", "female", "m", "f", "man", "woman"}
@@ -94,10 +127,10 @@ def detect_field(column_name: str, values: Iterable[object] = ()) -> FieldDetect
 
     for field_type, hints in FIELD_NAME_HINTS.items():
         for hint in hints:
-            hint_norm = normalize_text(hint, expand_abbreviations=False)
+            hint_norm = normalize_text(hint.text, expand_abbreviations=False)
             if hint_norm and hint_norm in normalized_name:
-                scores[field_type] += 0.72
-                signals[field_type].append(f"name:{hint}")
+                scores[field_type] += hint.weight
+                signals[field_type].append(f"name:{hint.text}:{hint.weight:.2f}")
                 break
 
     for field_type in (
@@ -159,7 +192,8 @@ def _matches_field(field_type: FieldType, value: str) -> bool:
     if field_type == FieldType.SPECIES:
         return value in SPECIES_VALUES or value.startswith("ncbitaxon:")
     if field_type == FieldType.CELL_LINE:
-        return value in KNOWN_CELL_LINES
+        tokens = set(re.split(r"[^a-z0-9-]+", value))
+        return value in KNOWN_CELL_LINES or bool(tokens & KNOWN_CELL_LINES)
     if field_type == FieldType.AGE:
         return bool(AGE_RE.match(value))
     if field_type == FieldType.DISEASE:

@@ -40,6 +40,11 @@ omicsmeta harmonize \
 
 See `examples/basic/` for a small input file and expected mappings.
 
+Column routing is conservative for vague fields. For example, a GEO
+`phenotype` column is only routed to disease when the values contain disease
+evidence; otherwise, the terms stay unmapped for review instead of being forced
+into an ontology.
+
 ## Mapper backends
 
 The built-in backend is the default and works offline for common terms. The

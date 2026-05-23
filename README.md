@@ -18,6 +18,7 @@ Current implementation status:
 - tabular and minimal GEO SOFT readers
 - harmonization orchestrator and CLI
 - real GEO SOFT snippet test coverage
+- conservative field routing for ambiguous metadata columns
 
 Example:
 
