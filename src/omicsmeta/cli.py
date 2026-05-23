@@ -29,6 +29,7 @@ def build_parser() -> argparse.ArgumentParser:
     harmonize.add_argument("--geo-accession", help="GEO accession to fetch directly, such as GSE123456")
     harmonize.add_argument("--output", required=True, help="harmonized output TSV")
     harmonize.add_argument("--unmapped", required=True, help="unmapped terms TSV")
+    harmonize.add_argument("--sample-output", help="sample-wide output TSV with one row per input sample")
     harmonize.add_argument("--report", required=True, help="HTML QC report")
     harmonize.add_argument("--confidence-threshold", type=float, default=0.70)
     harmonize.add_argument("--mapper", choices=["builtin", "text2term"], default="builtin")
@@ -99,6 +100,12 @@ def main(argv: list[str] | None = None) -> int:
             result = harmonizer.from_file(args.input, file_type=args.input_type)
         write_tabular(result.harmonized, args.output)
         write_tabular(result.unmapped, args.unmapped)
+        if args.sample_output:
+            write_tabular(
+                result.sample_table,
+                args.sample_output,
+                default_columns=["row_index", "sample_id"],
+            )
         write_html_report(result.qc_summary, args.report)
         return 0
 

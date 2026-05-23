@@ -37,7 +37,58 @@ def test_basic_example_matches_expected_mapping_subset():
     assert expected <= observed
 
 
+def test_basic_example_matches_expected_sample_table_subset():
+    result = Harmonizer().from_rows(read_tabular(EXAMPLE_DIR / "metadata.tsv"))
+    observed = {
+        (
+            str(row["row_index"]),
+            str(row["sample_id"]),
+            str(row["mapped_term_count"]),
+            str(row["unmapped_term_count"]),
+            str(row["validation_issue_count"]),
+            str(row["tissue_id"]),
+            str(row["tissue_label"]),
+            str(row["disease_id"]),
+            str(row["disease_label"]),
+            str(row["cell_line_id"]),
+            str(row["cell_line_label"]),
+            str(row["sex_id"]),
+            str(row["sex_label"]),
+            str(row["species_id"]),
+            str(row["species_label"]),
+        )
+        for row in result.sample_table
+    }
+
+    expected = {
+        (
+            row["row_index"],
+            row["sample_id"],
+            row["mapped_term_count"],
+            row["unmapped_term_count"],
+            row["validation_issue_count"],
+            row["tissue_id"],
+            row["tissue_label"],
+            row["disease_id"],
+            row["disease_label"],
+            row["cell_line_id"],
+            row["cell_line_label"],
+            row["sex_id"],
+            row["sex_label"],
+            row["species_id"],
+            row["species_label"],
+        )
+        for row in _read_expected_samples()
+    }
+
+    assert expected <= observed
+
+
 def _read_expected() -> list[dict[str, str]]:
     with (EXAMPLE_DIR / "expected_harmonized.tsv").open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle, delimiter="\t"))
 
+
+def _read_expected_samples() -> list[dict[str, str]]:
+    with (EXAMPLE_DIR / "expected_samples.tsv").open(newline="", encoding="utf-8") as handle:
+        return list(csv.DictReader(handle, delimiter="\t"))

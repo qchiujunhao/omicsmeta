@@ -14,6 +14,7 @@ Input files can be CSV or TSV. The first row must contain column names.
 omicsmeta harmonize metadata.tsv \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --sample-output samples.tsv \
   --report qc_report.html
 ```
 
@@ -26,6 +27,7 @@ omicsmeta harmonize \
   --geo-accession GSE123456 \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --sample-output samples.tsv \
   --report qc_report.html
 ```
 
@@ -33,6 +35,7 @@ omicsmeta harmonize \
 
 - `harmonized.tsv`: accepted ontology mappings with confidence scores
 - `unmapped.tsv`: terms below the confidence threshold for review
+- `samples.tsv`: one row per sample with sample-wide ontology columns
 - `qc_report.html`: mapping rates and validation warning summaries
 
 See `examples/basic/` for a small input file and expected mappings.
@@ -50,6 +53,7 @@ omicsmeta harmonize metadata.tsv \
   --ontology-obo disease_slim.obo \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --sample-output samples.tsv \
   --report qc_report.html
 ```
 
@@ -76,6 +80,7 @@ omicsmeta harmonize metadata.tsv \
   --ontology-resource uberon \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --sample-output samples.tsv \
   --report qc_report.html
 ```
 

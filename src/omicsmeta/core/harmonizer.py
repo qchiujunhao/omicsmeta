@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from collections.abc import Mapping
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 
 from omicsmeta.core.detector import FieldDetection, detect_fields
@@ -21,6 +21,7 @@ class HarmonizationResult:
 
     harmonized: list[dict[str, object]]
     unmapped: list[dict[str, object]]
+    sample_table: list[dict[str, object]]
     qc_summary: dict[str, object]
     detections: dict[str, FieldDetection]
     issues: list[ValidationIssue]
@@ -74,6 +75,8 @@ class Harmonizer:
             sample_id = _sample_id(row, row_index)
 
             for column, value in row.items():
+                if _is_identifier_column(column):
+                    continue
                 detection = detections.get(column, FieldDetection(FieldType.UNKNOWN, 0.0))
                 terms = split_terms(value)
                 if not terms:
@@ -93,6 +96,7 @@ class Harmonizer:
         return HarmonizationResult(
             harmonized=harmonized,
             unmapped=unmapped,
+            sample_table=_sample_table(row_list, harmonized, unmapped, issues),
             qc_summary=_qc_summary(harmonized, unmapped, issues),
             detections=detections,
             issues=issues,
@@ -135,6 +139,18 @@ def _sample_id(row: Mapping[str, object], row_index: int) -> str:
     return f"row_{row_index + 1}"
 
 
+def _is_identifier_column(column: str) -> bool:
+    normalized = column.lower().strip()
+    return normalized in {
+        "sample_id",
+        "sample",
+        "geo_accession",
+        "gsm",
+        "run",
+        "accession",
+    }
+
+
 def _qc_summary(
     harmonized: list[dict[str, object]],
     unmapped: list[dict[str, object]],
@@ -174,3 +190,68 @@ def _qc_summary(
             for issue in issues
         ],
     }
+
+
+def _sample_table(
+    rows: list[Mapping[str, object]],
+    harmonized: list[dict[str, object]],
+    unmapped: list[dict[str, object]],
+    issues: list[ValidationIssue],
+) -> list[dict[str, object]]:
+    harmonized_by_row: dict[int, list[dict[str, object]]] = defaultdict(list)
+    unmapped_by_row: dict[int, list[dict[str, object]]] = defaultdict(list)
+    issues_by_row: dict[int, list[ValidationIssue]] = defaultdict(list)
+
+    for record in harmonized:
+        harmonized_by_row[int(record["row_index"])].append(record)
+    for record in unmapped:
+        unmapped_by_row[int(record["row_index"])].append(record)
+    for issue in issues:
+        issues_by_row[issue.row_index].append(issue)
+
+    sample_rows: list[dict[str, object]] = []
+    for row_index, row in enumerate(rows):
+        sample_row: dict[str, object] = {
+            "row_index": row_index,
+            "sample_id": _sample_id(row, row_index),
+            "mapped_term_count": len(harmonized_by_row[row_index]),
+            "unmapped_term_count": len(unmapped_by_row[row_index]),
+            "validation_issue_count": len(issues_by_row[row_index]),
+        }
+        for field_type in FieldType:
+            if field_type == FieldType.UNKNOWN:
+                continue
+            _add_field_summary(sample_row, field_type.value, harmonized_by_row[row_index])
+        sample_rows.append(sample_row)
+
+    return sample_rows
+
+
+def _add_field_summary(
+    sample_row: dict[str, object],
+    field_name: str,
+    records: list[dict[str, object]],
+) -> None:
+    field_records = [record for record in records if record["field_type"] == field_name]
+    if not field_records:
+        return
+
+    sample_row[f"{field_name}_id"] = _join_unique(record["ontology_id"] for record in field_records)
+    sample_row[f"{field_name}_label"] = _join_unique(record["label"] for record in field_records)
+    sample_row[f"{field_name}_ontology"] = _join_unique(record["ontology"] for record in field_records)
+    sample_row[f"{field_name}_source_columns"] = _join_unique(record["column"] for record in field_records)
+    sample_row[f"{field_name}_confidence"] = round(
+        max(float(record["mapping_confidence"]) for record in field_records),
+        4,
+    )
+
+
+def _join_unique(values: Iterable[object]) -> str:
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for value in values:
+        text = str(value)
+        if text and text not in seen:
+            seen.add(text)
+            ordered.append(text)
+    return "; ".join(ordered)

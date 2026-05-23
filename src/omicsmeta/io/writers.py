@@ -33,11 +33,12 @@ def write_tabular(
     *,
     delimiter: str = "\t",
     include_unmapped: bool = True,
+    default_columns: list[str] | None = None,
 ) -> None:
     """Write harmonization records to a delimited text file."""
 
     rows = records if include_unmapped else [record for record in records if record.get("accepted")]
-    columns = _columns(rows)
+    columns = _columns(rows, default_columns=default_columns if default_columns is not None else DEFAULT_COLUMNS)
     with Path(path).open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=columns, delimiter=delimiter, extrasaction="ignore")
         writer.writeheader()
@@ -71,10 +72,10 @@ def write_html_report(summary: dict[str, object], path: str | Path) -> None:
     Path(path).write_text(document, encoding="utf-8")
 
 
-def _columns(records: list[dict[str, object]]) -> list[str]:
+def _columns(records: list[dict[str, object]], *, default_columns: list[str]) -> list[str]:
     if not records:
-        return DEFAULT_COLUMNS
-    columns = list(DEFAULT_COLUMNS)
+        return default_columns
+    columns = list(default_columns)
     for record in records:
         for key in record:
             if key not in columns:

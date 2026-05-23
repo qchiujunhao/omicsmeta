@@ -25,6 +25,7 @@ Example:
 omicsmeta harmonize metadata.tsv \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --sample-output samples.tsv \
   --report qc_report.html
 ```
 
@@ -35,6 +36,7 @@ omicsmeta harmonize \
   --geo-accession GSE123456 \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --sample-output samples.tsv \
   --report qc_report.html
 ```
 
@@ -45,6 +47,7 @@ omicsmeta harmonize metadata.tsv \
   --ontology-obo disease_slim.obo \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --sample-output samples.tsv \
   --report qc_report.html
 ```
 
@@ -59,6 +62,7 @@ omicsmeta harmonize metadata.tsv \
   --ontology-resource uberon \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --sample-output samples.tsv \
   --report qc_report.html
 ```
 
