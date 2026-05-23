@@ -1,0 +1,7 @@
+format-version: 1.2
+
+[Term]
+id: DOID:9999999
+name: Example disease
+synonym: "Example syndrome" EXACT []
+
