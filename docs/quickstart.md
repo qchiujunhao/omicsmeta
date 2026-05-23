@@ -45,6 +45,10 @@ Column routing is conservative for vague fields. For example, a GEO
 evidence; otherwise, the terms stay unmapped for review instead of being forced
 into an ontology.
 
+Recognized cell lines can add inferred species, tissue, and disease terms when
+those fields are missing. Inferred records are marked with `backend=inference`
+and include `inferred_from` provenance in the detailed output.
+
 ## Mapper backends
 
 The built-in backend is the default and works offline for common terms. The

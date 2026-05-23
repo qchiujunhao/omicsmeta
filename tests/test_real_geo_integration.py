@@ -20,6 +20,7 @@ def test_harmonizer_maps_real_geo_soft_snippet():
     assert "UBERON:0002048" in mapped_ids
     assert "CVCL:0023" in mapped_ids
     assert "DOID:299" in mapped_ids
+    assert not [record for record in result.harmonized if record["backend"] == "inference"]
     assert result.qc_summary["mapped_terms"] >= 8
     assert result.unmapped
 

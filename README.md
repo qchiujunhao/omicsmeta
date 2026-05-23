@@ -19,6 +19,7 @@ Current implementation status:
 - harmonization orchestrator and CLI
 - real GEO SOFT snippet test coverage
 - conservative field routing for ambiguous metadata columns
+- transparent cell-line inference for missing species/tissue/disease fields
 
 Example:
 

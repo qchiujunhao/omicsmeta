@@ -11,7 +11,7 @@ from omicsmeta.core.fetcher import HTTPSession, fetch_geo_rows
 from omicsmeta.core.mapper import BuiltinMapper, Mapper, MappingResult
 from omicsmeta.core.normalizer import split_terms
 from omicsmeta.core.types import FieldType, ValidationIssue
-from omicsmeta.core.validator import validate_row
+from omicsmeta.core.validator import infer_expected_terms, validate_row
 from omicsmeta.io.readers import read_geo_soft, read_tabular
 
 
@@ -92,6 +92,7 @@ class Harmonizer:
                         unmapped.append(record)
 
             issues.extend(validate_row(row_index, mappings_by_column))
+            harmonized.extend(infer_expected_terms(row_index, sample_id, mappings_by_column))
 
         return HarmonizationResult(
             harmonized=harmonized,
@@ -156,11 +157,13 @@ def _qc_summary(
     unmapped: list[dict[str, object]],
     issues: list[ValidationIssue],
 ) -> dict[str, object]:
-    total = len(harmonized) + len(unmapped)
+    direct_harmonized = [record for record in harmonized if record["backend"] != "inference"]
+    inferred = [record for record in harmonized if record["backend"] == "inference"]
+    total = len(direct_harmonized) + len(unmapped)
     mapped_by_field: dict[str, int] = defaultdict(int)
     total_by_field: dict[str, int] = defaultdict(int)
 
-    for record in harmonized:
+    for record in direct_harmonized:
         field = str(record["field_type"])
         mapped_by_field[field] += 1
         total_by_field[field] += 1
@@ -175,9 +178,10 @@ def _qc_summary(
 
     return {
         "total_terms": total,
-        "mapped_terms": len(harmonized),
+        "mapped_terms": len(direct_harmonized),
+        "inferred_terms": len(inferred),
         "unmapped_terms": len(unmapped),
-        "mapping_rate": round(len(harmonized) / total, 4) if total else 0.0,
+        "mapping_rate": round(len(direct_harmonized) / total, 4) if total else 0.0,
         "mapping_rate_by_field": mapping_rate_by_field,
         "validation_issue_count": len(issues),
         "validation_issues": [
@@ -199,11 +203,14 @@ def _sample_table(
     issues: list[ValidationIssue],
 ) -> list[dict[str, object]]:
     harmonized_by_row: dict[int, list[dict[str, object]]] = defaultdict(list)
+    direct_harmonized_by_row: dict[int, list[dict[str, object]]] = defaultdict(list)
     unmapped_by_row: dict[int, list[dict[str, object]]] = defaultdict(list)
     issues_by_row: dict[int, list[ValidationIssue]] = defaultdict(list)
 
     for record in harmonized:
         harmonized_by_row[int(record["row_index"])].append(record)
+        if record["backend"] != "inference":
+            direct_harmonized_by_row[int(record["row_index"])].append(record)
     for record in unmapped:
         unmapped_by_row[int(record["row_index"])].append(record)
     for issue in issues:
@@ -214,7 +221,8 @@ def _sample_table(
         sample_row: dict[str, object] = {
             "row_index": row_index,
             "sample_id": _sample_id(row, row_index),
-            "mapped_term_count": len(harmonized_by_row[row_index]),
+            "mapped_term_count": len(direct_harmonized_by_row[row_index]),
+            "inferred_term_count": len(harmonized_by_row[row_index]) - len(direct_harmonized_by_row[row_index]),
             "unmapped_term_count": len(unmapped_by_row[row_index]),
             "validation_issue_count": len(issues_by_row[row_index]),
         }
