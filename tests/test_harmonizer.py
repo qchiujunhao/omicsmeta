@@ -29,8 +29,26 @@ def test_harmonizer_tracks_unmapped_terms():
     result = Harmonizer().from_rows(rows)
     assert result.unmapped
     assert result.unmapped[0]["accepted"] is False
+    assert result.unmapped_summary[0]["normalized_term"] == "not a real disease term"
+    assert result.unmapped_summary[0]["occurrence_count"] == 1
     assert result.sample_table[0]["mapped_term_count"] == 0
     assert result.sample_table[0]["unmapped_term_count"] == 1
+
+
+def test_unmapped_summary_groups_repeated_terms():
+    rows = [
+        {"sample_id": "S1", "treatment": "cisplatin"},
+        {"sample_id": "S2", "treatment": "cisplatin"},
+        {"sample_id": "S3", "treatment": "vehicle"},
+    ]
+
+    result = Harmonizer().from_rows(rows)
+
+    assert result.qc_summary["unique_unmapped_terms"] == 2
+    assert result.unmapped_summary[0]["normalized_term"] == "cisplatin"
+    assert result.unmapped_summary[0]["occurrence_count"] == 2
+    assert result.unmapped_summary[0]["sample_ids"] == "S1; S2"
+    assert result.unmapped_summary[0]["columns"] == "treatment"
 
 
 def test_sample_table_joins_multiple_mappings_per_field():

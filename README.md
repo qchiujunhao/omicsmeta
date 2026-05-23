@@ -20,6 +20,7 @@ Current implementation status:
 - real GEO SOFT snippet test coverage
 - conservative field routing for ambiguous metadata columns
 - transparent cell-line inference for missing species/tissue/disease fields
+- deduplicated unmapped-term summaries for manual curation
 
 Example:
 
@@ -27,6 +28,7 @@ Example:
 omicsmeta harmonize metadata.tsv \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --unmapped-summary-output unmapped_summary.tsv \
   --sample-output samples.tsv \
   --report qc_report.html
 ```
@@ -38,6 +40,7 @@ omicsmeta harmonize \
   --geo-accession GSE123456 \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --unmapped-summary-output unmapped_summary.tsv \
   --sample-output samples.tsv \
   --report qc_report.html
 ```
@@ -49,6 +52,7 @@ omicsmeta harmonize metadata.tsv \
   --ontology-obo disease_slim.obo \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --unmapped-summary-output unmapped_summary.tsv \
   --sample-output samples.tsv \
   --report qc_report.html
 ```
@@ -64,6 +68,7 @@ omicsmeta harmonize metadata.tsv \
   --ontology-resource uberon \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --unmapped-summary-output unmapped_summary.tsv \
   --sample-output samples.tsv \
   --report qc_report.html
 ```

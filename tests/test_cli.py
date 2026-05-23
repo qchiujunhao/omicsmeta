@@ -13,6 +13,7 @@ def test_cli_harmonize_from_tabular_file(tmp_path):
     )
     output_path = tmp_path / "harmonized.tsv"
     unmapped_path = tmp_path / "unmapped.tsv"
+    unmapped_summary_path = tmp_path / "unmapped_summary.tsv"
     sample_path = tmp_path / "samples.tsv"
     report_path = tmp_path / "report.html"
 
@@ -24,6 +25,8 @@ def test_cli_harmonize_from_tabular_file(tmp_path):
             str(output_path),
             "--unmapped",
             str(unmapped_path),
+            "--unmapped-summary-output",
+            str(unmapped_summary_path),
             "--sample-output",
             str(sample_path),
             "--report",
@@ -33,6 +36,7 @@ def test_cli_harmonize_from_tabular_file(tmp_path):
 
     assert exit_code == 0
     assert "DOID:3908" in output_path.read_text(encoding="utf-8")
+    assert "occurrence_count" in unmapped_summary_path.read_text(encoding="utf-8")
     assert "disease_id" in sample_path.read_text(encoding="utf-8")
     assert "mapping_rate" in report_path.read_text(encoding="utf-8")
 

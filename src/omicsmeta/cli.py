@@ -29,6 +29,7 @@ def build_parser() -> argparse.ArgumentParser:
     harmonize.add_argument("--geo-accession", help="GEO accession to fetch directly, such as GSE123456")
     harmonize.add_argument("--output", required=True, help="harmonized output TSV")
     harmonize.add_argument("--unmapped", required=True, help="unmapped terms TSV")
+    harmonize.add_argument("--unmapped-summary-output", help="deduplicated unmapped-term review TSV")
     harmonize.add_argument("--sample-output", help="sample-wide output TSV with one row per input sample")
     harmonize.add_argument("--report", required=True, help="HTML QC report")
     harmonize.add_argument("--confidence-threshold", type=float, default=0.70)
@@ -100,6 +101,23 @@ def main(argv: list[str] | None = None) -> int:
             result = harmonizer.from_file(args.input, file_type=args.input_type)
         write_tabular(result.harmonized, args.output)
         write_tabular(result.unmapped, args.unmapped)
+        if args.unmapped_summary_output:
+            write_tabular(
+                result.unmapped_summary,
+                args.unmapped_summary_output,
+                default_columns=[
+                    "field_type",
+                    "normalized_term",
+                    "occurrence_count",
+                    "sample_ids",
+                    "columns",
+                    "example_terms",
+                    "best_candidate_id",
+                    "best_candidate_label",
+                    "best_candidate_ontology",
+                    "best_candidate_confidence",
+                ],
+            )
         if args.sample_output:
             write_tabular(
                 result.sample_table,

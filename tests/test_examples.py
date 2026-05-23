@@ -86,6 +86,35 @@ def test_basic_example_matches_expected_sample_table_subset():
     assert expected <= observed
 
 
+def test_basic_example_matches_expected_unmapped_summary_subset():
+    result = Harmonizer().from_rows(read_tabular(EXAMPLE_DIR / "metadata.tsv"))
+    observed = {
+        (
+            str(row["field_type"]),
+            str(row["normalized_term"]),
+            str(row["occurrence_count"]),
+            str(row["sample_ids"]),
+            str(row["columns"]),
+            str(row["example_terms"]),
+        )
+        for row in result.unmapped_summary
+    }
+
+    expected = {
+        (
+            row["field_type"],
+            row["normalized_term"],
+            row["occurrence_count"],
+            row["sample_ids"],
+            row["columns"],
+            row["example_terms"],
+        )
+        for row in _read_expected_unmapped_summary()
+    }
+
+    assert expected <= observed
+
+
 def _read_expected() -> list[dict[str, str]]:
     with (EXAMPLE_DIR / "expected_harmonized.tsv").open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle, delimiter="\t"))
@@ -93,4 +122,9 @@ def _read_expected() -> list[dict[str, str]]:
 
 def _read_expected_samples() -> list[dict[str, str]]:
     with (EXAMPLE_DIR / "expected_samples.tsv").open(newline="", encoding="utf-8") as handle:
+        return list(csv.DictReader(handle, delimiter="\t"))
+
+
+def _read_expected_unmapped_summary() -> list[dict[str, str]]:
+    with (EXAMPLE_DIR / "expected_unmapped_summary.tsv").open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle, delimiter="\t"))

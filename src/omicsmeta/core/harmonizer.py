@@ -21,6 +21,7 @@ class HarmonizationResult:
 
     harmonized: list[dict[str, object]]
     unmapped: list[dict[str, object]]
+    unmapped_summary: list[dict[str, object]]
     sample_table: list[dict[str, object]]
     qc_summary: dict[str, object]
     detections: dict[str, FieldDetection]
@@ -97,6 +98,7 @@ class Harmonizer:
         return HarmonizationResult(
             harmonized=harmonized,
             unmapped=unmapped,
+            unmapped_summary=_unmapped_summary(unmapped),
             sample_table=_sample_table(row_list, harmonized, unmapped, issues),
             qc_summary=_qc_summary(harmonized, unmapped, issues),
             detections=detections,
@@ -181,6 +183,7 @@ def _qc_summary(
         "mapped_terms": len(direct_harmonized),
         "inferred_terms": len(inferred),
         "unmapped_terms": len(unmapped),
+        "unique_unmapped_terms": len(_unmapped_summary(unmapped)),
         "mapping_rate": round(len(direct_harmonized) / total, 4) if total else 0.0,
         "mapping_rate_by_field": mapping_rate_by_field,
         "validation_issue_count": len(issues),
@@ -233,6 +236,42 @@ def _sample_table(
         sample_rows.append(sample_row)
 
     return sample_rows
+
+
+def _unmapped_summary(unmapped: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = defaultdict(list)
+    for record in unmapped:
+        key = (str(record["field_type"]), str(record["normalized_term"]))
+        grouped[key].append(record)
+
+    summary_rows: list[dict[str, object]] = []
+    for (field_type, normalized_term), records in grouped.items():
+        summary_rows.append(
+            {
+                "field_type": field_type,
+                "normalized_term": normalized_term,
+                "occurrence_count": len(records),
+                "sample_ids": _join_unique(record["sample_id"] for record in records),
+                "columns": _join_unique(record["column"] for record in records),
+                "example_terms": _join_unique(record["term"] for record in records),
+                "best_candidate_id": _join_unique(record["ontology_id"] for record in records),
+                "best_candidate_label": _join_unique(record["label"] for record in records),
+                "best_candidate_ontology": _join_unique(record["ontology"] for record in records),
+                "best_candidate_confidence": round(
+                    max(float(record["mapping_confidence"]) for record in records),
+                    4,
+                ),
+            }
+        )
+
+    return sorted(
+        summary_rows,
+        key=lambda row: (
+            -int(row["occurrence_count"]),
+            str(row["field_type"]),
+            str(row["normalized_term"]),
+        ),
+    )
 
 
 def _add_field_summary(

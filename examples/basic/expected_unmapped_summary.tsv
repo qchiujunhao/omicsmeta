@@ -1,0 +1,3 @@
+field_type	normalized_term	occurrence_count	sample_ids	columns	example_terms
+treatment	cisplatin	1	S1	treatment	cisplatin
+treatment	vehicle	1	S2	treatment	vehicle
