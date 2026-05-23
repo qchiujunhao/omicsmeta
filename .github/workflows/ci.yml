@@ -30,5 +30,4 @@ jobs:
         run: python -m pip install -e ".[dev]"
 
       - name: Run tests
-        run: python -m pytest
-
+        run: python -m pytest --cov=omicsmeta --cov-report=term-missing --cov-fail-under=70

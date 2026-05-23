@@ -37,6 +37,7 @@ ABBREVIATIONS: dict[str, str] = {
 
 COMMON_TYPOS: dict[str, str] = {
     "adenocarcenoma": "adenocarcinoma",
+    "caner": "cancer",
     "carcenoma": "carcinoma",
     "carinoma": "carcinoma",
     "leukaemia": "leukemia",
@@ -111,4 +112,3 @@ def split_terms(value: object) -> list[NormalizedTerm]:
         if normalized:
             terms.append(NormalizedTerm(original=part, normalized=normalized))
     return terms
-

@@ -1,0 +1,22 @@
+# GEO SOFT excerpt from GSE154243 / GSM4667502 / GSM4667503.
+# Accessed from https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM4667502
+# and https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM4667503.
+# Only metadata lines needed for parser and harmonizer tests are retained.
+^SAMPLE = GSM4667502
+!Sample_title = A549
+!Sample_geo_accession = GSM4667502
+!Sample_source_name_ch1 = Non-small cell lung caner cells cultured in vitro
+!Sample_organism_ch1 = Homo sapiens
+!Sample_characteristics_ch1 = tissue: Lung
+!Sample_characteristics_ch1 = cell line: A549
+!Sample_characteristics_ch1 = disease state: Adenocarcinoma
+!Sample_characteristics_ch1 = phenotype: parental cell line
+^SAMPLE = GSM4667503
+!Sample_title = A549/DDP
+!Sample_geo_accession = GSM4667503
+!Sample_source_name_ch1 = Non-small cell lung caner cells cultured in vitro
+!Sample_organism_ch1 = Homo sapiens
+!Sample_characteristics_ch1 = tissue: Lung
+!Sample_characteristics_ch1 = cell line: A549
+!Sample_characteristics_ch1 = disease state: Adenocarcinoma
+!Sample_characteristics_ch1 = phenotype: chemoresistant

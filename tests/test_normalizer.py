@@ -8,6 +8,7 @@ def test_normalize_text_expands_domain_abbreviations():
 
 def test_normalize_text_fixes_common_typos():
     assert normalize_text("lung carcenoma") == "lung carcinoma"
+    assert normalize_text("lung caner") == "lung cancer"
 
 
 def test_split_terms_returns_original_and_normalized_terms():
@@ -18,4 +19,3 @@ def test_split_terms_returns_original_and_normalized_terms():
         "stage iii",
         "estrogen receptor positive",
     ]
-

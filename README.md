@@ -17,6 +17,7 @@ Current implementation status:
 - simple OBO loader and SQLite ontology cache
 - tabular and minimal GEO SOFT readers
 - harmonization orchestrator and CLI
+- real GEO SOFT snippet test coverage
 
 Example:
 
@@ -48,7 +49,7 @@ omicsmeta harmonize metadata.tsv \
 ```
 
 This repository is not yet JOSS-ready. The immediate next milestones are
-broader ontology resources, real-data integration tests, CI, documentation, and
+broader ontology resources, additional real-data integration tests, documentation, and
 benchmarking against `text2term` alone.
 
 Run tests locally with:

@@ -35,6 +35,8 @@ omicsmeta harmonize \
 - `unmapped.tsv`: terms below the confidence threshold for review
 - `qc_report.html`: mapping rates and validation warning summaries
 
+See `examples/basic/` for a small input file and expected mappings.
+
 ## Mapper backends
 
 The built-in backend is the default and works offline for common terms. The

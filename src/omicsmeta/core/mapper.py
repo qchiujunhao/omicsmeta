@@ -225,6 +225,8 @@ def default_terms() -> list[OntologyTerm]:
     return [
         OntologyTerm("DOID:1612", "breast cancer", "doid", ("breast carcinoma", "mammary carcinoma", "brca"), (FieldType.DISEASE,)),
         OntologyTerm("DOID:3908", "non-small cell lung carcinoma", "doid", ("non-small cell lung cancer", "nsclc"), (FieldType.DISEASE,)),
+        OntologyTerm("DOID:3910", "lung adenocarcinoma", "doid", ("lung adenocarcinoma cancer", "luad"), (FieldType.DISEASE,)),
+        OntologyTerm("DOID:299", "adenocarcinoma", "doid", (), (FieldType.DISEASE,)),
         OntologyTerm("DOID:1324", "lung cancer", "doid", ("lung carcinoma",), (FieldType.DISEASE,)),
         OntologyTerm("DOID:9256", "colorectal cancer", "doid", ("colon cancer", "crc"), (FieldType.DISEASE,)),
         OntologyTerm("DOID:8552", "acute myeloid leukemia", "doid", ("aml",), (FieldType.DISEASE,)),
