@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from omicsmeta.core.harmonizer import Harmonizer
+from omicsmeta.core.harmonizer import HarmonizationResult, Harmonizer, merge_results
 from omicsmeta.core.mapper import BuiltinMapper, Text2TermMapper, load_builtin_terms
 from omicsmeta.io.writers import write_html_report, write_tabular
 from omicsmeta.ontologies.resources import (
@@ -58,6 +58,22 @@ def build_parser() -> argparse.ArgumentParser:
         help="directory containing managed ontology resources",
     )
 
+    batch = subparsers.add_parser("batch", help="harmonize multiple metadata files or GEO accessions")
+    batch.add_argument("--input", action="append", default=[], help="input metadata file; may be repeated")
+    batch.add_argument("--input-type", choices=["tabular", "geo_soft"], default="tabular")
+    batch.add_argument("--geo-accession", action="append", default=[], help="GEO accession to fetch; may be repeated")
+    batch.add_argument("--output", required=True, help="combined harmonized output TSV")
+    batch.add_argument("--unmapped", required=True, help="combined unmapped terms TSV")
+    batch.add_argument("--unmapped-summary-output", help="deduplicated unmapped-term review TSV")
+    batch.add_argument("--sample-output", help="combined sample-wide output TSV")
+    batch.add_argument("--report", required=True, help="combined HTML QC report")
+    batch.add_argument("--confidence-threshold", type=float, default=0.70)
+    batch.add_argument("--mapper", choices=["builtin", "text2term"], default="builtin")
+    batch.add_argument("--ontology-obo", action="append", default=[])
+    batch.add_argument("--no-default-terms", action="store_true")
+    batch.add_argument("--ontology-resource", action="append", choices=[*all_resource_names(), "all"], default=[])
+    batch.add_argument("--ontology-cache-dir", default=str(DEFAULT_CACHE_DIR))
+
     ontologies = subparsers.add_parser("ontologies", help="manage local ontology resources")
     ontology_subparsers = ontologies.add_subparsers(dest="ontology_command", required=True)
 
@@ -99,32 +115,29 @@ def main(argv: list[str] | None = None) -> int:
             result = harmonizer.from_geo(args.geo_accession)
         else:
             result = harmonizer.from_file(args.input, file_type=args.input_type)
-        write_tabular(result.harmonized, args.output)
-        write_tabular(result.unmapped, args.unmapped)
-        if args.unmapped_summary_output:
-            write_tabular(
-                result.unmapped_summary,
-                args.unmapped_summary_output,
-                default_columns=[
-                    "field_type",
-                    "normalized_term",
-                    "occurrence_count",
-                    "sample_ids",
-                    "columns",
-                    "example_terms",
-                    "best_candidate_id",
-                    "best_candidate_label",
-                    "best_candidate_ontology",
-                    "best_candidate_confidence",
-                ],
-            )
-        if args.sample_output:
-            write_tabular(
-                result.sample_table,
-                args.sample_output,
-                default_columns=["row_index", "sample_id"],
-            )
-        write_html_report(result.qc_summary, args.report)
+        _write_result_outputs(result, args)
+        return 0
+
+    if args.command == "batch":
+        if not args.input and not args.geo_accession:
+            parser.error("batch requires --input or --geo-accession")
+
+        mapper = _mapper(
+            args.mapper,
+            args.confidence_threshold,
+            ontology_paths=args.ontology_obo,
+            ontology_resources=args.ontology_resource,
+            ontology_cache_dir=args.ontology_cache_dir,
+            include_defaults=not args.no_default_terms,
+        )
+        harmonizer = Harmonizer(mapper=mapper, confidence_threshold=args.confidence_threshold)
+        sourced_results: list[tuple[str, HarmonizationResult]] = []
+        for input_path in args.input:
+            sourced_results.append((Path(input_path).name, harmonizer.from_file(input_path, file_type=args.input_type)))
+        for accession in args.geo_accession:
+            sourced_results.append((str(accession).upper(), harmonizer.from_geo(accession)))
+
+        _write_result_outputs(merge_results(sourced_results), args)
         return 0
 
     if args.command == "ontologies":
@@ -176,6 +189,36 @@ def _mapper(
             )
         return Text2TermMapper(confidence_threshold=confidence_threshold)
     raise ValueError(f"Unsupported mapper: {name}")
+
+
+def _write_result_outputs(result: HarmonizationResult, args: argparse.Namespace) -> None:
+    write_tabular(result.harmonized, args.output)
+    write_tabular(result.unmapped, args.unmapped)
+    if getattr(args, "unmapped_summary_output", None):
+        write_tabular(
+            result.unmapped_summary,
+            args.unmapped_summary_output,
+            default_columns=[
+                "field_type",
+                "normalized_term",
+                "occurrence_count",
+                "batch_sources",
+                "sample_ids",
+                "columns",
+                "example_terms",
+                "best_candidate_id",
+                "best_candidate_label",
+                "best_candidate_ontology",
+                "best_candidate_confidence",
+            ],
+        )
+    if getattr(args, "sample_output", None):
+        write_tabular(
+            result.sample_table,
+            args.sample_output,
+            default_columns=["row_index", "sample_id", "batch_source"],
+        )
+    write_html_report(result.qc_summary, args.report)
 
 
 def _expand_resource_names(names: list[str]) -> list[str]:

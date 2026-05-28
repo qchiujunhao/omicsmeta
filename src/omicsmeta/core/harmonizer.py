@@ -106,6 +106,33 @@ class Harmonizer:
         )
 
 
+def merge_results(sourced_results: Iterable[tuple[str, HarmonizationResult]]) -> HarmonizationResult:
+    """Merge multiple harmonization results into batch-level output tables."""
+
+    harmonized: list[dict[str, object]] = []
+    unmapped: list[dict[str, object]] = []
+    sample_table: list[dict[str, object]] = []
+    issues: list[ValidationIssue] = []
+    detections: dict[str, FieldDetection] = {}
+
+    for source, result in sourced_results:
+        harmonized.extend(_with_batch_source(result.harmonized, source))
+        unmapped.extend(_with_batch_source(result.unmapped, source))
+        sample_table.extend(_with_batch_source(result.sample_table, source))
+        issues.extend(result.issues)
+        detections.update({f"{source}:{column}": detection for column, detection in result.detections.items()})
+
+    return HarmonizationResult(
+        harmonized=harmonized,
+        unmapped=unmapped,
+        unmapped_summary=_unmapped_summary(unmapped),
+        sample_table=sample_table,
+        qc_summary=_qc_summary(harmonized, unmapped, issues),
+        detections=detections,
+        issues=issues,
+    )
+
+
 def _record(
     row_index: int,
     sample_id: str,
@@ -251,6 +278,7 @@ def _unmapped_summary(unmapped: list[dict[str, object]]) -> list[dict[str, objec
                 "field_type": field_type,
                 "normalized_term": normalized_term,
                 "occurrence_count": len(records),
+                "batch_sources": _join_unique(record.get("batch_source", "") for record in records),
                 "sample_ids": _join_unique(record["sample_id"] for record in records),
                 "columns": _join_unique(record["column"] for record in records),
                 "example_terms": _join_unique(record["term"] for record in records),
@@ -272,6 +300,10 @@ def _unmapped_summary(unmapped: list[dict[str, object]]) -> list[dict[str, objec
             str(row["normalized_term"]),
         ),
     )
+
+
+def _with_batch_source(records: list[dict[str, object]], source: str) -> list[dict[str, object]]:
+    return [{**record, "batch_source": source} for record in records]
 
 
 def _add_field_summary(

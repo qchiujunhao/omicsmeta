@@ -142,3 +142,40 @@ synonym: "Cached syndrome" EXACT []
 
     assert exit_code == 0
     assert "DOID:9999998" in output_path.read_text(encoding="utf-8")
+
+
+def test_cli_batch_harmonize_combines_files(tmp_path):
+    first = tmp_path / "first.tsv"
+    first.write_text("sample_id\tdisease\ttreatment\nS1\tNSCLC\tcisplatin\n", encoding="utf-8")
+    second = tmp_path / "second.tsv"
+    second.write_text("sample_id\tdisease\ttreatment\nS2\tBRCA\tcisplatin\n", encoding="utf-8")
+    output_path = tmp_path / "harmonized.tsv"
+    unmapped_path = tmp_path / "unmapped.tsv"
+    unmapped_summary_path = tmp_path / "unmapped_summary.tsv"
+    sample_path = tmp_path / "samples.tsv"
+    report_path = tmp_path / "report.html"
+
+    exit_code = main(
+        [
+            "batch",
+            "--input",
+            str(first),
+            "--input",
+            str(second),
+            "--output",
+            str(output_path),
+            "--unmapped",
+            str(unmapped_path),
+            "--unmapped-summary-output",
+            str(unmapped_summary_path),
+            "--sample-output",
+            str(sample_path),
+            "--report",
+            str(report_path),
+        ]
+    )
+
+    assert exit_code == 0
+    assert "batch_source" in output_path.read_text(encoding="utf-8")
+    assert "first.tsv; second.tsv" in unmapped_summary_path.read_text(encoding="utf-8")
+    assert "batch_source" in sample_path.read_text(encoding="utf-8")

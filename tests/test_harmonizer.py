@@ -1,4 +1,4 @@
-from omicsmeta.core.harmonizer import Harmonizer
+from omicsmeta.core.harmonizer import Harmonizer, merge_results
 
 
 def test_harmonizer_maps_known_metadata_rows():
@@ -58,3 +58,17 @@ def test_sample_table_joins_multiple_mappings_per_field():
 
     assert result.sample_table[0]["disease_id"] == "DOID:3908; DOID:1612"
     assert result.sample_table[0]["disease_source_columns"] == "disease"
+
+
+def test_merge_results_adds_batch_source_and_recomputes_summary():
+    harmonizer = Harmonizer()
+    first = harmonizer.from_rows([{"sample_id": "S1", "treatment": "cisplatin"}])
+    second = harmonizer.from_rows([{"sample_id": "S2", "treatment": "cisplatin"}])
+
+    merged = merge_results([("first.tsv", first), ("second.tsv", second)])
+
+    assert {record["batch_source"] for record in merged.unmapped} == {"first.tsv", "second.tsv"}
+    assert {row["batch_source"] for row in merged.sample_table} == {"first.tsv", "second.tsv"}
+    assert merged.unmapped_summary[0]["normalized_term"] == "cisplatin"
+    assert merged.unmapped_summary[0]["occurrence_count"] == 2
+    assert merged.unmapped_summary[0]["batch_sources"] == "first.tsv; second.tsv"

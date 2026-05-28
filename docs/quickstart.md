@@ -100,3 +100,21 @@ omicsmeta harmonize metadata.tsv \
 
 By default, resources are stored under `~/.cache/omicsmeta/ontologies`. Use
 `--ontology-cache-dir` or `--cache-dir` to choose another location.
+
+## Batch Harmonization
+
+Use `batch` for multiple files or GEO accessions:
+
+```bash
+omicsmeta batch \
+  --input metadata_a.tsv \
+  --input metadata_b.tsv \
+  --output harmonized.tsv \
+  --unmapped unmapped.tsv \
+  --unmapped-summary-output unmapped_summary.tsv \
+  --sample-output samples.tsv \
+  --report qc_report.html
+```
+
+Batch outputs include a `batch_source` column so rows can be traced back to
+their input file or accession.

@@ -73,6 +73,19 @@ omicsmeta harmonize metadata.tsv \
   --report qc_report.html
 ```
 
+Multiple files can be harmonized in one run:
+
+```bash
+omicsmeta batch \
+  --input metadata_a.tsv \
+  --input metadata_b.tsv \
+  --output harmonized.tsv \
+  --unmapped unmapped.tsv \
+  --unmapped-summary-output unmapped_summary.tsv \
+  --sample-output samples.tsv \
+  --report qc_report.html
+```
+
 This repository is not yet JOSS-ready. The immediate next milestones are
 additional real-data integration tests, sample-wide output tables, documentation,
 and benchmarking against `text2term` alone.
