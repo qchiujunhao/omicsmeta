@@ -29,6 +29,24 @@ CELL_LINE_EXPECTATIONS: dict[str, tuple[ExpectedTerm, ...]] = {
     "CVCL:0030": (
         ExpectedTerm(FieldType.SPECIES, "NCBITaxon:9606", "Homo sapiens", "ncbitaxon"),
     ),
+    "CVCL:0045": (
+        ExpectedTerm(FieldType.SPECIES, "NCBITaxon:9606", "Homo sapiens", "ncbitaxon"),
+        ExpectedTerm(FieldType.TISSUE, "UBERON:0002113", "kidney", "uberon"),
+    ),
+    "CVCL:0004": (
+        ExpectedTerm(FieldType.SPECIES, "NCBITaxon:9606", "Homo sapiens", "ncbitaxon"),
+        ExpectedTerm(FieldType.TISSUE, "UBERON:0000178", "blood", "uberon"),
+        ExpectedTerm(FieldType.DISEASE, "DOID:8552", "acute myeloid leukemia", "doid"),
+    ),
+    "CVCL:0065": (
+        ExpectedTerm(FieldType.SPECIES, "NCBITaxon:9606", "Homo sapiens", "ncbitaxon"),
+        ExpectedTerm(FieldType.TISSUE, "UBERON:0000178", "blood", "uberon"),
+    ),
+    "CVCL:0022": (
+        ExpectedTerm(FieldType.SPECIES, "NCBITaxon:9606", "Homo sapiens", "ncbitaxon"),
+        ExpectedTerm(FieldType.TISSUE, "UBERON:0000955", "brain", "uberon"),
+        ExpectedTerm(FieldType.DISEASE, "DOID:3068", "glioblastoma", "doid"),
+    ),
     "CVCL:0023": (
         ExpectedTerm(FieldType.SPECIES, "NCBITaxon:9606", "Homo sapiens", "ncbitaxon"),
         ExpectedTerm(FieldType.TISSUE, "UBERON:0002048", "lung", "uberon"),

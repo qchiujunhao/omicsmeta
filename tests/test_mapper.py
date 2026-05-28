@@ -18,6 +18,12 @@ def test_builtin_mapper_uses_field_type_routing():
     assert result.ontology_id == "UBERON:0000310"
 
 
+def test_builtin_mapper_maps_common_cell_line_synonyms():
+    mapper = BuiltinMapper()
+    assert mapper.map_term("K562", FieldType.CELL_LINE).ontology_id == "CVCL:0004"
+    assert mapper.map_term("U87MG", FieldType.CELL_LINE).ontology_id == "CVCL:0022"
+
+
 def test_builtin_mapper_rejects_low_confidence_match():
     mapper = BuiltinMapper(confidence_threshold=0.95)
     result = mapper.map_term("totally unrelated metadata", FieldType.DISEASE)

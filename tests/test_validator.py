@@ -36,6 +36,22 @@ def test_harmonizer_infers_missing_terms_from_cell_line():
     assert result.sample_table[0]["disease_id"] == "DOID:3910"
 
 
+def test_harmonizer_infers_extended_cell_line_contexts():
+    rows = [
+        {"sample_id": "S1", "cell line": "HEK293"},
+        {"sample_id": "S2", "cell line": "U87MG"},
+        {"sample_id": "S3", "cell line": "Jurkat"},
+    ]
+
+    result = Harmonizer().from_rows(rows)
+
+    by_sample = {row["sample_id"]: row for row in result.sample_table}
+    assert by_sample["S1"]["tissue_id"] == "UBERON:0002113"
+    assert by_sample["S2"]["tissue_id"] == "UBERON:0000955"
+    assert by_sample["S2"]["disease_id"] == "DOID:3068"
+    assert by_sample["S3"]["tissue_id"] == "UBERON:0000178"
+
+
 def test_harmonizer_does_not_infer_over_observed_conflict():
     rows = [{"sample_id": "S1", "cell line": "MCF-7", "tissue": "lung"}]
 
