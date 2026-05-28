@@ -18,6 +18,8 @@ from omicsmeta.ontologies.resources import (
     resource_status,
 )
 
+INPUT_TYPES = ["tabular", "geo_soft", "biosample_xml", "sra_xml"]
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="omicsmeta")
@@ -25,7 +27,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     harmonize = subparsers.add_parser("harmonize", help="harmonize metadata from a file or GEO accession")
     harmonize.add_argument("input", nargs="?", help="input metadata file")
-    harmonize.add_argument("--input-type", choices=["tabular", "geo_soft"], default="tabular")
+    harmonize.add_argument("--input-type", choices=INPUT_TYPES, default="tabular")
     harmonize.add_argument("--geo-accession", help="GEO accession to fetch directly, such as GSE123456")
     harmonize.add_argument("--output", required=True, help="harmonized output TSV")
     harmonize.add_argument("--unmapped", required=True, help="unmapped terms TSV")
@@ -60,7 +62,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     batch = subparsers.add_parser("batch", help="harmonize multiple metadata files or GEO accessions")
     batch.add_argument("--input", action="append", default=[], help="input metadata file; may be repeated")
-    batch.add_argument("--input-type", choices=["tabular", "geo_soft"], default="tabular")
+    batch.add_argument("--input-type", choices=INPUT_TYPES, default="tabular")
     batch.add_argument("--geo-accession", action="append", default=[], help="GEO accession to fetch; may be repeated")
     batch.add_argument("--output", required=True, help="combined harmonized output TSV")
     batch.add_argument("--unmapped", required=True, help="combined unmapped terms TSV")

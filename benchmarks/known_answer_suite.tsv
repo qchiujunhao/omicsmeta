@@ -5,3 +5,5 @@ immune_pbmc	../tests/fixtures/immune_pbmc_soft_snippet.txt	geo_soft	truth/immune
 mouse_liver	../tests/fixtures/mouse_liver_soft_snippet.txt	geo_soft	truth/mouse_liver_expected_harmonized.tsv	GEO-style mouse liver metadata with organism, tissue, and sex fields.
 treatment_perturbation	../tests/fixtures/treatment_perturbation_soft_snippet.txt	geo_soft	truth/treatment_perturbation_expected_harmonized.tsv	GEO-style treatment metadata where perturbation terms remain review items.
 ambiguous_phenotype	../tests/fixtures/ambiguous_phenotype_soft_snippet.txt	geo_soft	truth/ambiguous_phenotype_expected_harmonized.tsv	GEO-style ambiguous phenotype metadata that should not force phenotype terms into disease.
+biosample_xml	../tests/fixtures/biosample_snippet.xml	biosample_xml	truth/biosample_expected_harmonized.tsv	BioSample XML fixture with attributes for disease, tissue, sex, species, and cell line.
+sra_xml	../tests/fixtures/sra_snippet.xml	sra_xml	truth/sra_expected_harmonized.tsv	SRA XML fixture with SAMPLE_ATTRIBUTE disease, tissue, species, and cell-line fields.

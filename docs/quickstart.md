@@ -33,6 +33,19 @@ omicsmeta harmonize \
   --report qc_report.html
 ```
 
+## Read BioSample or SRA XML
+
+Use `--input-type biosample_xml` or `--input-type sra_xml` for XML exports that
+contain BioSample attributes or SRA `SAMPLE_ATTRIBUTE` blocks:
+
+```bash
+omicsmeta harmonize biosample.xml \
+  --input-type biosample_xml \
+  --output harmonized.tsv \
+  --unmapped unmapped.tsv \
+  --report qc_report.html
+```
+
 ## Outputs
 
 - `harmonized.tsv`: accepted ontology mappings with confidence scores

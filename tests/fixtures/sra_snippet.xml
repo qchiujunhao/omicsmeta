@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EXPERIMENT_PACKAGE_SET>
+  <EXPERIMENT_PACKAGE>
+    <SAMPLE accession="SRS000001" alias="sra-a549">
+      <TITLE>A549 treatment sample</TITLE>
+      <SAMPLE_NAME>
+        <TAXON_ID>9606</TAXON_ID>
+        <SCIENTIFIC_NAME>Homo sapiens</SCIENTIFIC_NAME>
+      </SAMPLE_NAME>
+      <SAMPLE_ATTRIBUTES>
+        <SAMPLE_ATTRIBUTE>
+          <TAG>tissue</TAG>
+          <VALUE>lung</VALUE>
+        </SAMPLE_ATTRIBUTE>
+        <SAMPLE_ATTRIBUTE>
+          <TAG>disease state</TAG>
+          <VALUE>NSCLC</VALUE>
+        </SAMPLE_ATTRIBUTE>
+        <SAMPLE_ATTRIBUTE>
+          <TAG>cell line</TAG>
+          <VALUE>A549</VALUE>
+        </SAMPLE_ATTRIBUTE>
+      </SAMPLE_ATTRIBUTES>
+    </SAMPLE>
+    <SAMPLE accession="SRS000002" alias="sra-mcf7">
+      <TITLE>MCF-7 breast cancer sample</TITLE>
+      <SAMPLE_NAME>
+        <TAXON_ID>9606</TAXON_ID>
+        <SCIENTIFIC_NAME>Homo sapiens</SCIENTIFIC_NAME>
+      </SAMPLE_NAME>
+      <SAMPLE_ATTRIBUTES>
+        <SAMPLE_ATTRIBUTE>
+          <TAG>tissue</TAG>
+          <VALUE>breast</VALUE>
+        </SAMPLE_ATTRIBUTE>
+        <SAMPLE_ATTRIBUTE>
+          <TAG>disease state</TAG>
+          <VALUE>breast cancer</VALUE>
+        </SAMPLE_ATTRIBUTE>
+        <SAMPLE_ATTRIBUTE>
+          <TAG>cell line</TAG>
+          <VALUE>MCF-7</VALUE>
+        </SAMPLE_ATTRIBUTE>
+      </SAMPLE_ATTRIBUTES>
+    </SAMPLE>
+  </EXPERIMENT_PACKAGE>
+</EXPERIMENT_PACKAGE_SET>

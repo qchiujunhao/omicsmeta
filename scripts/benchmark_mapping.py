@@ -15,7 +15,7 @@ def build_parser() -> argparse.ArgumentParser:
     source.add_argument("--input", help="metadata input file")
     source.add_argument("--manifest", help="TSV manifest of benchmark cases")
     parser.add_argument("--truth", help="known-answer TSV; required with --input")
-    parser.add_argument("--input-type", choices=["tabular", "geo_soft"], default="tabular")
+    parser.add_argument("--input-type", choices=["tabular", "geo_soft", "biosample_xml", "sra_xml"], default="tabular")
     parser.add_argument("--confidence-threshold", type=float, default=0.70)
     parser.add_argument("--output-json", help="optional JSON output path")
     return parser

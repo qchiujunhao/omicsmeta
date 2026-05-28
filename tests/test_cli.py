@@ -179,3 +179,29 @@ def test_cli_batch_harmonize_combines_files(tmp_path):
     assert "batch_source" in output_path.read_text(encoding="utf-8")
     assert "first.tsv; second.tsv" in unmapped_summary_path.read_text(encoding="utf-8")
     assert "batch_source" in sample_path.read_text(encoding="utf-8")
+
+
+def test_cli_harmonize_from_biosample_xml(tmp_path):
+    input_path = Path(__file__).parent / "fixtures" / "biosample_snippet.xml"
+    output_path = tmp_path / "harmonized.tsv"
+    unmapped_path = tmp_path / "unmapped.tsv"
+    report_path = tmp_path / "report.html"
+
+    exit_code = main(
+        [
+            "harmonize",
+            str(input_path),
+            "--input-type",
+            "biosample_xml",
+            "--output",
+            str(output_path),
+            "--unmapped",
+            str(unmapped_path),
+            "--report",
+            str(report_path),
+        ]
+    )
+
+    assert exit_code == 0
+    assert "SAMN000001" in output_path.read_text(encoding="utf-8")
+    assert "NCBITaxon:9606" in output_path.read_text(encoding="utf-8")

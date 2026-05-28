@@ -8,7 +8,8 @@ by downstream analysis workflows.
 
 The harmonization pipeline runs these steps:
 
-1. Read metadata from a tabular file, GEO SOFT snippet, or fetched GEO accession.
+1. Read metadata from a tabular file, GEO SOFT snippet, BioSample XML file, SRA
+   XML file, or fetched GEO accession.
 2. Detect the semantic role of each column, such as disease, tissue, cell line,
    species, sex, age, or treatment.
 3. Normalize and split values into candidate terms.
@@ -67,8 +68,9 @@ separately from direct source metadata during benchmarking.
 
 ## Current Limitations
 
-- GEO SOFT and tabular inputs are supported; SRA and BioSample readers are not
-  complete yet.
+- GEO SOFT, tabular, BioSample XML, and SRA XML inputs are supported. The XML
+  readers cover common sample attributes but are not complete parsers for every
+  NCBI export shape.
 - The bundled vocabulary is intentionally small and should be extended with
   managed ontology resources or user-provided OBO files for real projects.
 - The benchmark command currently scores known-answer fixtures, not a

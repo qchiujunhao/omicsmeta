@@ -9,7 +9,7 @@ The project is currently pre-alpha and has not published a numbered release.
 - Added a Python package scaffold with CLI entry point.
 - Added normalization, field detection, mapping, validation, and harmonization
   modules.
-- Added tabular and minimal GEO SOFT readers.
+- Added tabular, minimal GEO SOFT, BioSample XML, and SRA XML readers.
 - Added detailed harmonized, unmapped, unmapped-summary, sample-wide, and HTML
   QC outputs.
 - Added managed ontology resource download and SQLite indexing commands.

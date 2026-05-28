@@ -16,7 +16,7 @@ Current implementation status:
 - lightweight built-in ontology mapper for common terms
 - optional `text2term` mapper adapter
 - simple OBO loader and SQLite ontology cache
-- tabular and minimal GEO SOFT readers
+- tabular, minimal GEO SOFT, BioSample XML, and SRA XML readers
 - harmonization orchestrator and CLI
 - real GEO SOFT snippet test coverage
 - conservative field routing for ambiguous metadata columns

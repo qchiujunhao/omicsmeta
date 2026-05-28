@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BioSampleSet>
+  <BioSample accession="SAMN000001">
+    <Description>
+      <Title>A549 lung cancer sample</Title>
+      <Organism taxonomy_id="9606" taxonomy_name="Homo sapiens">Homo sapiens</Organism>
+    </Description>
+    <Attributes>
+      <Attribute attribute_name="tissue">lung</Attribute>
+      <Attribute attribute_name="disease">NSCLC</Attribute>
+      <Attribute attribute_name="cell line">A549</Attribute>
+      <Attribute attribute_name="sex">female</Attribute>
+    </Attributes>
+  </BioSample>
+  <BioSample accession="SAMN000002">
+    <Description>
+      <Title>MCF-7 breast cancer sample</Title>
+      <Organism taxonomy_id="9606" taxonomy_name="Homo sapiens">Homo sapiens</Organism>
+    </Description>
+    <Attributes>
+      <Attribute attribute_name="tissue">breast</Attribute>
+      <Attribute attribute_name="disease">BRCA</Attribute>
+      <Attribute attribute_name="cell line">MCF-7</Attribute>
+      <Attribute attribute_name="sex">female</Attribute>
+    </Attributes>
+  </BioSample>
+</BioSampleSet>

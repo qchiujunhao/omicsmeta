@@ -18,13 +18,13 @@ result = harmonizer.from_file("metadata.tsv", file_type="tabular")
 
 Supported input methods:
 
-- `from_file(path, file_type="tabular")`: read CSV/TSV metadata or a GEO SOFT
-  snippet from disk.
+- `from_file(path, file_type="tabular")`: read CSV/TSV metadata, a GEO SOFT
+  snippet, BioSample XML file, or SRA XML file from disk.
 - `from_geo(accession)`: fetch a GEO accession and harmonize its sample
   metadata.
 - `from_rows(rows)`: harmonize an in-memory list of row dictionaries.
 
-`file_type` is either `tabular` or `geo_soft`.
+`file_type` is one of `tabular`, `geo_soft`, `biosample_xml`, or `sra_xml`.
 
 ## HarmonizationResult
 

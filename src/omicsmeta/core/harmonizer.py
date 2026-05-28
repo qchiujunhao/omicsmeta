@@ -12,7 +12,7 @@ from omicsmeta.core.mapper import BuiltinMapper, Mapper, MappingResult
 from omicsmeta.core.normalizer import split_terms
 from omicsmeta.core.types import FieldType, ValidationIssue
 from omicsmeta.core.validator import infer_expected_terms, validate_row
-from omicsmeta.io.readers import read_geo_soft, read_tabular
+from omicsmeta.io.readers import read_biosample_xml, read_geo_soft, read_sra_xml, read_tabular
 
 
 @dataclass(frozen=True)
@@ -47,6 +47,10 @@ class Harmonizer:
             rows = read_tabular(path)
         elif file_type == "geo_soft":
             rows = read_geo_soft(path)
+        elif file_type == "biosample_xml":
+            rows = read_biosample_xml(path)
+        elif file_type == "sra_xml":
+            rows = read_sra_xml(path)
         else:
             raise ValueError(f"Unsupported file_type: {file_type}")
         return self.from_rows(rows)
