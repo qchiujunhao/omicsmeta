@@ -3,6 +3,7 @@
 .ruff_cache/
 .coverage
 htmlcov/
+site/
 dist/
 build/
 *.egg-info/

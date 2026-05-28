@@ -129,3 +129,20 @@ python scripts/benchmark_mapping.py \
   --truth examples/basic/expected_harmonized.tsv \
   --output-json benchmark.json
 ```
+
+## Python API
+
+Use the API when harmonization is part of a larger workflow:
+
+```python
+from omicsmeta.core.harmonizer import Harmonizer
+
+result = Harmonizer(confidence_threshold=0.70).from_file(
+    "examples/basic/metadata.tsv",
+    file_type="tabular",
+)
+print(result.qc_summary)
+```
+
+See the [API reference](api.md) for result objects, mapper backends, and output
+writers.

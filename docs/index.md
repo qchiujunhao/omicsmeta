@@ -3,8 +3,13 @@
 `omicsmeta` harmonizes public omics metadata by combining domain-specific
 normalization, metadata field detection, ontology mapping, and validation.
 
-Current documentation is intentionally compact while the project is in early
-development. The quickstart covers file harmonization, GEO fetching, and local
-ontology resource management.
+The package is currently pre-alpha. The documentation describes the implemented
+behavior and calls out limitations where the roadmap is not complete.
 
-Start with the [quickstart](quickstart.md).
+## Start Here
+
+- [Quickstart](quickstart.md): install the package and run the CLI.
+- [API reference](api.md): call the harmonizer from Python.
+- [Design](design.md): understand pipeline decisions and output semantics.
+- [Basic fixture tutorial](tutorials/basic_fixture.md): run the local example
+  and benchmark it against known-answer mappings.

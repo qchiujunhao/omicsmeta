@@ -14,6 +14,7 @@ Current implementation status:
 - string normalization and biomedical abbreviation expansion
 - heuristic metadata field detection
 - lightweight built-in ontology mapper for common terms
+- optional `text2term` mapper adapter
 - simple OBO loader and SQLite ontology cache
 - tabular and minimal GEO SOFT readers
 - harmonization orchestrator and CLI
@@ -21,6 +22,9 @@ Current implementation status:
 - conservative field routing for ambiguous metadata columns
 - transparent cell-line inference for missing species/tissue/disease fields
 - deduplicated unmapped-term summaries for manual curation
+- sample-wide output tables
+- batch harmonization
+- known-answer benchmark helper and CLI script
 
 Example:
 
@@ -94,9 +98,19 @@ python scripts/benchmark_mapping.py \
   --truth examples/basic/expected_harmonized.tsv
 ```
 
-This repository is not yet JOSS-ready. The immediate next milestones are
-additional real-data integration tests, sample-wide output tables, documentation,
-and benchmarking against `text2term` alone.
+## Documentation
+
+- [Quickstart](docs/quickstart.md)
+- [API reference](docs/api.md)
+- [Design notes](docs/design.md)
+- [Basic fixture tutorial](docs/tutorials/basic_fixture.md)
+
+## Maturity
+
+This repository is pre-alpha and not yet JOSS-ready. The implemented code is
+tested, but the project still needs larger curated benchmarks, broader
+SRA/BioSample input support, CI on hosted infrastructure, release packaging, and
+external user feedback before submission.
 
 Run tests locally with:
 

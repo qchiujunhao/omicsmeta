@@ -1,0 +1,12 @@
+site_name: omicsmeta
+site_description: Automated harmonization of public omics metadata
+repo_url: https://github.com/omicsmeta/omicsmeta
+theme:
+  name: mkdocs
+nav:
+  - Home: index.md
+  - Quickstart: quickstart.md
+  - API: api.md
+  - Design: design.md
+  - Tutorials:
+      - Basic fixture: tutorials/basic_fixture.md
