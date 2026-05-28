@@ -86,6 +86,14 @@ omicsmeta batch \
   --report qc_report.html
 ```
 
+Known-answer fixtures can be benchmarked:
+
+```bash
+python scripts/benchmark_mapping.py \
+  --input examples/basic/metadata.tsv \
+  --truth examples/basic/expected_harmonized.tsv
+```
+
 This repository is not yet JOSS-ready. The immediate next milestones are
 additional real-data integration tests, sample-wide output tables, documentation,
 and benchmarking against `text2term` alone.

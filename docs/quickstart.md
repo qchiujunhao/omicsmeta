@@ -118,3 +118,14 @@ omicsmeta batch \
 
 Batch outputs include a `batch_source` column so rows can be traced back to
 their input file or accession.
+
+## Benchmark A Fixture
+
+Compare accepted mappings to a known-answer table:
+
+```bash
+python scripts/benchmark_mapping.py \
+  --input examples/basic/metadata.tsv \
+  --truth examples/basic/expected_harmonized.tsv \
+  --output-json benchmark.json
+```
