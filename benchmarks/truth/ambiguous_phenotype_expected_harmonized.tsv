@@ -1,0 +1,5 @@
+sample_id	field_type	ontology_id	label
+GSMAMB1	species	NCBITaxon:9606	Homo sapiens
+GSMAMB1	tissue	UBERON:0000310	breast
+GSMAMB2	species	NCBITaxon:9606	Homo sapiens
+GSMAMB2	tissue	UBERON:0000310	breast

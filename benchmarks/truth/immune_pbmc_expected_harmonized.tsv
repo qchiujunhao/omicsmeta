@@ -1,0 +1,7 @@
+sample_id	field_type	ontology_id	label
+GSMIMMUNE1	species	NCBITaxon:9606	Homo sapiens
+GSMIMMUNE1	tissue	UBERON:0000178	blood
+GSMIMMUNE1	sex	PATO:0000383	female
+GSMIMMUNE2	species	NCBITaxon:9606	Homo sapiens
+GSMIMMUNE2	tissue	UBERON:0000178	blood
+GSMIMMUNE2	sex	PATO:0000384	male

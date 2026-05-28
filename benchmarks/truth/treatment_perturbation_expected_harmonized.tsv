@@ -1,0 +1,11 @@
+sample_id	field_type	ontology_id	label
+GSMTRT1	disease	DOID:1324	lung cancer
+GSMTRT1	species	NCBITaxon:9606	Homo sapiens
+GSMTRT1	tissue	UBERON:0002048	lung
+GSMTRT1	disease	DOID:3908	non-small cell lung carcinoma
+GSMTRT1	cell_line	CVCL:0023	A549
+GSMTRT2	disease	DOID:1324	lung cancer
+GSMTRT2	species	NCBITaxon:9606	Homo sapiens
+GSMTRT2	tissue	UBERON:0002048	lung
+GSMTRT2	disease	DOID:3908	non-small cell lung carcinoma
+GSMTRT2	cell_line	CVCL:0023	A549

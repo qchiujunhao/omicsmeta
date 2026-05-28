@@ -1,0 +1,11 @@
+sample_id	field_type	ontology_id	label
+S1	species	NCBITaxon:9606	Homo sapiens
+S1	disease	DOID:3908	non-small cell lung carcinoma
+S1	tissue	UBERON:0002048	lung
+S1	cell_line	CVCL:0023	A549
+S1	sex	PATO:0000383	female
+S2	species	NCBITaxon:9606	Homo sapiens
+S2	disease	DOID:1612	breast cancer
+S2	tissue	UBERON:0000310	breast
+S2	cell_line	CVCL:0031	MCF-7
+S2	sex	PATO:0000383	female

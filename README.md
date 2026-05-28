@@ -98,6 +98,14 @@ python scripts/benchmark_mapping.py \
   --truth examples/basic/expected_harmonized.tsv
 ```
 
+Run the bundled multi-fixture benchmark suite:
+
+```bash
+python scripts/benchmark_mapping.py \
+  --manifest benchmarks/known_answer_suite.tsv \
+  --output-json benchmark_suite.json
+```
+
 ## Documentation
 
 - [Quickstart](docs/quickstart.md)

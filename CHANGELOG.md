@@ -17,5 +17,6 @@ The project is currently pre-alpha and has not published a numbered release.
 - Added transparent cell-line inference for common cell lines.
 - Added batch harmonization for multiple files and GEO accessions.
 - Added known-answer benchmark helper and CLI script.
+- Added a multi-fixture known-answer benchmark suite.
 - Added integration fixtures based on GEO-style metadata snippets.
 - Added public documentation, contribution metadata, and a JOSS paper skeleton.

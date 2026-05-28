@@ -1,0 +1,7 @@
+name	input_path	input_type	truth_path	description
+basic_tabular	../examples/basic/metadata.tsv	tabular	truth/basic_expected_harmonized.tsv	Small tabular fixture with disease, tissue, species, sex, and cell-line fields.
+geo_lung_a549	../tests/fixtures/GSE154243_soft_snippet.txt	geo_soft	truth/GSE154243_expected_harmonized.tsv	GEO-style A549 lung adenocarcinoma metadata with a typo in source text.
+immune_pbmc	../tests/fixtures/immune_pbmc_soft_snippet.txt	geo_soft	truth/immune_pbmc_expected_harmonized.tsv	GEO-style immune blood metadata with sex and species fields.
+mouse_liver	../tests/fixtures/mouse_liver_soft_snippet.txt	geo_soft	truth/mouse_liver_expected_harmonized.tsv	GEO-style mouse liver metadata with organism, tissue, and sex fields.
+treatment_perturbation	../tests/fixtures/treatment_perturbation_soft_snippet.txt	geo_soft	truth/treatment_perturbation_expected_harmonized.tsv	GEO-style treatment metadata where perturbation terms remain review items.
+ambiguous_phenotype	../tests/fixtures/ambiguous_phenotype_soft_snippet.txt	geo_soft	truth/ambiguous_phenotype_expected_harmonized.tsv	GEO-style ambiguous phenotype metadata that should not force phenotype terms into disease.

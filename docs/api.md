@@ -80,7 +80,7 @@ write_tabular(result.sample_table, "samples.tsv")
 write_html_report(result.qc_summary, "qc_report.html")
 ```
 
-## Benchmark Helper
+## Benchmark Helpers
 
 Known-answer fixtures can be scored from Python with
 `omicsmeta.benchmark.benchmark_file`:
@@ -98,3 +98,12 @@ print(summary["overall"])
 The benchmark compares accepted direct mappings to expected
 `sample_id`, `field_type`, and `ontology_id` triples. Inferred mappings are
 excluded so benchmark scores reflect direct term mapping behavior.
+
+Run a TSV manifest of benchmark cases with `benchmark_suite`:
+
+```python
+from omicsmeta.benchmark import benchmark_suite
+
+summary = benchmark_suite("benchmarks/known_answer_suite.tsv")
+print(summary["case_count"], summary["overall"]["f1"])
+```

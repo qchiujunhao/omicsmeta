@@ -1,0 +1,9 @@
+sample_id	field_type	ontology_id	label
+GSM4667502	cell_line	CVCL:0023	A549
+GSM4667502	species	NCBITaxon:9606	Homo sapiens
+GSM4667502	tissue	UBERON:0002048	lung
+GSM4667502	disease	DOID:299	adenocarcinoma
+GSM4667503	species	NCBITaxon:9606	Homo sapiens
+GSM4667503	tissue	UBERON:0002048	lung
+GSM4667503	cell_line	CVCL:0023	A549
+GSM4667503	disease	DOID:299	adenocarcinoma

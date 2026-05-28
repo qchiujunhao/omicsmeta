@@ -54,3 +54,14 @@ python scripts/benchmark_mapping.py \
 The benchmark reports precision, recall, and F1 overall and by semantic field.
 Inferred terms are excluded from this score so the metric reflects direct
 mapping behavior.
+
+## Run the Bundled Suite
+
+The repository also includes a manifest of known-answer cases that covers the
+basic fixture and several GEO-style snippets:
+
+```bash
+python scripts/benchmark_mapping.py \
+  --manifest benchmarks/known_answer_suite.tsv \
+  --output-json benchmark_suite.json
+```

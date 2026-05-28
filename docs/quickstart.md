@@ -130,6 +130,14 @@ python scripts/benchmark_mapping.py \
   --output-json benchmark.json
 ```
 
+Run all bundled known-answer cases:
+
+```bash
+python scripts/benchmark_mapping.py \
+  --manifest benchmarks/known_answer_suite.tsv \
+  --output-json benchmark_suite.json
+```
+
 ## Python API
 
 Use the API when harmonization is part of a larger workflow:

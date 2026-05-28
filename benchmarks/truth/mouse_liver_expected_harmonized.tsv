@@ -1,0 +1,7 @@
+sample_id	field_type	ontology_id	label
+GSMMOUSE1	tissue	UBERON:0002107	liver
+GSMMOUSE1	species	NCBITaxon:10090	Mus musculus
+GSMMOUSE1	sex	PATO:0000384	male
+GSMMOUSE2	tissue	UBERON:0002107	liver
+GSMMOUSE2	species	NCBITaxon:10090	Mus musculus
+GSMMOUSE2	sex	PATO:0000383	female
