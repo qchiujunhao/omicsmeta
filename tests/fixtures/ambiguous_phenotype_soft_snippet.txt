@@ -1,0 +1,15 @@
+# GEO SOFT-style ambiguous phenotype fixture.
+^SAMPLE = GSMAMB1
+!Sample_title = responder sample
+!Sample_geo_accession = GSMAMB1
+!Sample_source_name_ch1 = biopsy
+!Sample_organism_ch1 = Homo sapiens
+!Sample_characteristics_ch1 = tissue: breast
+!Sample_characteristics_ch1 = phenotype: responder
+^SAMPLE = GSMAMB2
+!Sample_title = non-responder sample
+!Sample_geo_accession = GSMAMB2
+!Sample_source_name_ch1 = biopsy
+!Sample_organism_ch1 = Homo sapiens
+!Sample_characteristics_ch1 = tissue: breast
+!Sample_characteristics_ch1 = phenotype: non-responder

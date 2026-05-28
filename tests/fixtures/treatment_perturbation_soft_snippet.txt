@@ -1,0 +1,19 @@
+# GEO SOFT-style treatment perturbation fixture.
+^SAMPLE = GSMTRT1
+!Sample_title = A549 vehicle
+!Sample_geo_accession = GSMTRT1
+!Sample_source_name_ch1 = lung cancer cells
+!Sample_organism_ch1 = Homo sapiens
+!Sample_characteristics_ch1 = tissue: lung
+!Sample_characteristics_ch1 = disease state: NSCLC
+!Sample_characteristics_ch1 = cell line: A549
+!Sample_characteristics_ch1 = treatment: vehicle
+^SAMPLE = GSMTRT2
+!Sample_title = A549 cisplatin
+!Sample_geo_accession = GSMTRT2
+!Sample_source_name_ch1 = lung cancer cells
+!Sample_organism_ch1 = Homo sapiens
+!Sample_characteristics_ch1 = tissue: lung
+!Sample_characteristics_ch1 = disease state: NSCLC
+!Sample_characteristics_ch1 = cell line: A549
+!Sample_characteristics_ch1 = treatment: cisplatin

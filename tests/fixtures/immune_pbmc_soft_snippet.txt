@@ -1,0 +1,17 @@
+# GEO SOFT-style immune/PBMC metadata fixture.
+^SAMPLE = GSMIMMUNE1
+!Sample_title = Healthy donor PBMC
+!Sample_geo_accession = GSMIMMUNE1
+!Sample_source_name_ch1 = PBMC
+!Sample_organism_ch1 = Homo sapiens
+!Sample_characteristics_ch1 = tissue: blood
+!Sample_characteristics_ch1 = disease state: healthy control
+!Sample_characteristics_ch1 = sex: female
+^SAMPLE = GSMIMMUNE2
+!Sample_title = Patient PBMC
+!Sample_geo_accession = GSMIMMUNE2
+!Sample_source_name_ch1 = PBMC
+!Sample_organism_ch1 = Homo sapiens
+!Sample_characteristics_ch1 = tissue: blood
+!Sample_characteristics_ch1 = disease state: rheumatoid arthritis
+!Sample_characteristics_ch1 = sex: male

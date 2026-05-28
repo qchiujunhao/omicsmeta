@@ -1,0 +1,19 @@
+# GEO SOFT-style mouse tissue metadata fixture.
+^SAMPLE = GSMMOUSE1
+!Sample_title = mouse liver control
+!Sample_geo_accession = GSMMOUSE1
+!Sample_source_name_ch1 = liver
+!Sample_organism_ch1 = Mus musculus
+!Sample_characteristics_ch1 = tissue: liver
+!Sample_characteristics_ch1 = strain: C57BL/6J
+!Sample_characteristics_ch1 = sex: male
+!Sample_characteristics_ch1 = age: 8 weeks
+^SAMPLE = GSMMOUSE2
+!Sample_title = mouse liver treated
+!Sample_geo_accession = GSMMOUSE2
+!Sample_source_name_ch1 = liver
+!Sample_organism_ch1 = Mus musculus
+!Sample_characteristics_ch1 = tissue: liver
+!Sample_characteristics_ch1 = strain: C57BL/6J
+!Sample_characteristics_ch1 = sex: female
+!Sample_characteristics_ch1 = age: 8 weeks
