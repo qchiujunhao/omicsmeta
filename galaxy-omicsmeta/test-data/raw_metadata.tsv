@@ -1,0 +1,3 @@
+sample_id	organism	disease	tissue	cell line	sex	treatment
+S1	Homo sapiens	NSCLC	lung	A549	female	cisplatin
+S2	Homo sapiens	BRCA	breast	MCF-7	female	vehicle

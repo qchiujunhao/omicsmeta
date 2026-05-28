@@ -112,13 +112,14 @@ python scripts/benchmark_mapping.py \
 - [API reference](docs/api.md)
 - [Design notes](docs/design.md)
 - [Basic fixture tutorial](docs/tutorials/basic_fixture.md)
+- [Galaxy wrapper scaffold](galaxy-omicsmeta/omicsmeta_harmonize.xml)
 
 ## Maturity
 
 This repository is pre-alpha and not yet JOSS-ready. The implemented code is
-tested, but the project still needs larger curated benchmarks, broader
-SRA/BioSample input support, CI on hosted infrastructure, release packaging, and
-external user feedback before submission.
+tested, but the project still needs publication-scale curated benchmarks,
+release packaging, external user feedback, and Galaxy Tool Shed validation
+before submission.
 
 Run tests locally with:
 

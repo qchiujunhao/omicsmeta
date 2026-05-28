@@ -1,0 +1,72 @@
+<tool id="omicsmeta_harmonize" name="omicsmeta harmonize" version="@TOOL_VERSION@">
+    <description>harmonize public omics sample metadata to ontology terms</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+python '$__tool_directory__/omicsmeta_harmonize.py'
+  --input '$input_metadata'
+  --input-type '$input_type'
+  --confidence-threshold '$confidence_threshold'
+  --output-harmonized '$harmonized_metadata'
+  --output-unmapped '$unmapped_terms'
+  --output-unmapped-summary '$unmapped_summary'
+  --output-samples '$sample_table'
+  --output-report '$qc_report'
+    ]]></command>
+    <inputs>
+        <param name="input_metadata" type="data" format="tabular,txt,xml" label="Input metadata" help="CSV/TSV metadata, GEO SOFT text, BioSample XML, or SRA XML." />
+        <param name="input_type" type="select" label="Input type">
+            <option value="tabular" selected="true">CSV/TSV table</option>
+            <option value="geo_soft">GEO SOFT</option>
+            <option value="biosample_xml">BioSample XML</option>
+            <option value="sra_xml">SRA XML</option>
+        </param>
+        <param name="confidence_threshold" type="float" value="0.70" min="0" max="1" label="Confidence threshold" help="Minimum mapping confidence required for a term to be accepted." />
+    </inputs>
+    <outputs>
+        <data name="harmonized_metadata" format="tabular" label="${tool.name} on ${on_string}: harmonized metadata" />
+        <data name="unmapped_terms" format="tabular" label="${tool.name} on ${on_string}: unmapped terms" />
+        <data name="unmapped_summary" format="tabular" label="${tool.name} on ${on_string}: unmapped summary" />
+        <data name="sample_table" format="tabular" label="${tool.name} on ${on_string}: sample table" />
+        <data name="qc_report" format="html" label="${tool.name} on ${on_string}: QC report" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_metadata" value="raw_metadata.tsv" />
+            <param name="input_type" value="tabular" />
+            <param name="confidence_threshold" value="0.70" />
+            <output name="harmonized_metadata">
+                <assert_contents>
+                    <has_text text="DOID:3908" />
+                    <has_text text="UBERON:0002048" />
+                    <has_text text="NCBITaxon:9606" />
+                </assert_contents>
+            </output>
+            <output name="sample_table">
+                <assert_contents>
+                    <has_text text="disease_id" />
+                    <has_text text="DOID:3908" />
+                </assert_contents>
+            </output>
+            <output name="qc_report">
+                <assert_contents>
+                    <has_text text="mapping_rate" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+`omicsmeta` harmonizes public omics metadata by detecting semantic metadata
+fields, normalizing terms, mapping terms to ontology IDs, and writing reviewable
+outputs. This Galaxy wrapper exposes the same core CLI workflow for local files.
+
+Outputs include detailed accepted mappings, unmapped terms, a deduplicated
+unmapped-term summary, one sample-wide row per input sample, and an HTML QC
+report.
+    ]]></help>
+    <citations>
+        <citation type="bibtex">@misc{omicsmeta, title={omicsmeta: Automated Harmonization of Public Omics Metadata}, url={https://github.com/omicsmeta/omicsmeta}}</citation>
+    </citations>
+</tool>

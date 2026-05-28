@@ -1,0 +1,13 @@
+owner: omicsmeta
+name: omicsmeta_harmonize
+description: Harmonize public omics sample metadata to ontology terms.
+long_description: |
+  omicsmeta detects semantic metadata fields, normalizes sample metadata terms,
+  maps them to ontology IDs, and emits harmonized, unmapped, sample-wide, and QC
+  outputs.
+categories:
+  - Data Managers
+  - Data Source
+remote_repository_url: https://github.com/omicsmeta/omicsmeta
+homepage_url: https://github.com/omicsmeta/omicsmeta
+type: unrestricted

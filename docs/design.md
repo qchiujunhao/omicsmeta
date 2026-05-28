@@ -66,6 +66,14 @@ as `inferred_from` in the detailed output.
 Inference records are useful for downstream completeness but should be treated
 separately from direct source metadata during benchmarking.
 
+## Galaxy Wrapper
+
+The repository includes a Galaxy wrapper scaffold under `galaxy-omicsmeta/`.
+It wraps the same CLI workflow, emits the same five output files, and includes
+small test data for Planemo-oriented validation. The wrapper is not yet a Tool
+Shed release because the Python package still needs external packaging through a
+Galaxy-compatible channel.
+
 ## Current Limitations
 
 - GEO SOFT, tabular, BioSample XML, and SRA XML inputs are supported. The XML
@@ -75,4 +83,6 @@ separately from direct source metadata during benchmarking.
   managed ontology resources or user-provided OBO files for real projects.
 - The benchmark command currently scores known-answer fixtures, not a
   publication-scale curated benchmark set.
+- The Galaxy wrapper is a scaffold and has not yet been submitted to the Galaxy
+  Tool Shed.
 - The project is pre-alpha and not yet ready for JOSS submission.

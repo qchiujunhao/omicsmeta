@@ -20,3 +20,4 @@ The project is currently pre-alpha and has not published a numbered release.
 - Added a multi-fixture known-answer benchmark suite.
 - Added integration fixtures based on GEO-style metadata snippets.
 - Added public documentation, contribution metadata, and a JOSS paper skeleton.
+- Added a Galaxy wrapper scaffold with local wrapper smoke test data.
