@@ -42,8 +42,8 @@ dev = [
 omicsmeta = "omicsmeta.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/omicsmeta/omicsmeta"
-Issues = "https://github.com/omicsmeta/omicsmeta/issues"
+Homepage = "https://github.com/qchiujunhao/omicsmeta"
+Issues = "https://github.com/qchiujunhao/omicsmeta/issues"
 
 [tool.hatch.version]
 path = "src/omicsmeta/_version.py"

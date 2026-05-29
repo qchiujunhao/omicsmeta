@@ -67,6 +67,6 @@ unmapped-term summary, one sample-wide row per input sample, and an HTML QC
 report.
     ]]></help>
     <citations>
-        <citation type="bibtex">@misc{omicsmeta, title={omicsmeta: Automated Harmonization of Public Omics Metadata}, url={https://github.com/omicsmeta/omicsmeta}}</citation>
+        <citation type="bibtex">@misc{omicsmeta, title={omicsmeta: Automated Harmonization of Public Omics Metadata}, url={https://github.com/qchiujunhao/omicsmeta}}</citation>
     </citations>
 </tool>
