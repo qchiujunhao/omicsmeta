@@ -8,5 +8,6 @@ nav:
   - Quickstart: quickstart.md
   - API: api.md
   - Design: design.md
+  - Release readiness: release_readiness.md
   - Tutorials:
       - Basic fixture: tutorials/basic_fixture.md

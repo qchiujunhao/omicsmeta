@@ -31,3 +31,28 @@ jobs:
 
       - name: Run tests
         run: python -m pytest --cov=omicsmeta --cov-report=term-missing --cov-fail-under=70
+
+  package:
+    name: Package artifacts
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Build and check distributions
+        run: |
+          python -m pip install build twine
+          python -m build
+          python -m twine check dist/*.tar.gz dist/*.whl
+
+      - name: Install wheel and smoke-test CLI
+        run: |
+          python -m pip install dist/omicsmeta-*.whl
+          omicsmeta --help

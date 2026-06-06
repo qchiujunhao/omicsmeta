@@ -111,6 +111,7 @@ python scripts/benchmark_mapping.py \
 - [Quickstart](docs/quickstart.md)
 - [API reference](docs/api.md)
 - [Design notes](docs/design.md)
+- [Release readiness checklist](docs/release_readiness.md)
 - [Basic fixture tutorial](docs/tutorials/basic_fixture.md)
 - [Galaxy wrapper scaffold](galaxy-omicsmeta/omicsmeta_harmonize.xml)
 

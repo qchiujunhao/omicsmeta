@@ -21,3 +21,4 @@ The project is currently pre-alpha and has not published a numbered release.
 - Added integration fixtures based on GEO-style metadata snippets.
 - Added public documentation, contribution metadata, and a JOSS paper skeleton.
 - Added a Galaxy wrapper scaffold with local wrapper smoke test data.
+- Added package artifact build validation and a release-readiness checklist.

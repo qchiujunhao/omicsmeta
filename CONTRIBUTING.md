@@ -48,3 +48,8 @@ Before any release intended for external users, maintainers should verify that
 the test suite passes, documentation examples run from a clean checkout, and the
 paper and citation metadata do not overstate the validation status of the
 software.
+
+See the public [release readiness checklist](docs/release_readiness.md) for the
+artifact build, documentation, benchmark, and manual review checks. The
+checklist validates readiness only; publishing requires explicit maintainer
+approval.
