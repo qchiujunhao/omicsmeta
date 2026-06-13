@@ -3,7 +3,27 @@ site_description: Automated harmonization of public omics metadata
 site_url: https://qchiujunhao.github.io/omicsmeta/
 repo_url: https://github.com/qchiujunhao/omicsmeta
 theme:
-  name: mkdocs
+  name: material
+  language: en
+  icon:
+    logo: material/dna
+    repo: fontawesome/brands/github
+  palette:
+    - scheme: default
+      primary: teal
+      accent: amber
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - toc.follow
+markdown_extensions:
+  - attr_list
+  - md_in_html
+extra_css:
+  - stylesheets/extra.css
 nav:
   - Home: index.md
   - Quickstart: quickstart.md

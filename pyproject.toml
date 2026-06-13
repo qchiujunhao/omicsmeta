@@ -32,7 +32,10 @@ dependencies = [
 fuzzy = ["rapidfuzz>=3.0"]
 ontology = ["pronto>=2.5"]
 text2term = ["text2term"]
-docs = ["mkdocs>=1.6"]
+docs = [
+  "mkdocs>=1.6,<2",
+  "mkdocs-material>=9.5",
+]
 dev = [
   "pytest>=8",
   "pytest-cov>=5",

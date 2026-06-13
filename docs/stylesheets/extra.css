@@ -1,0 +1,131 @@
+:root {
+  --omicsmeta-ink: #15231f;
+  --omicsmeta-muted: #53615d;
+  --omicsmeta-line: #dbe5e1;
+  --omicsmeta-surface: #f7faf8;
+  --omicsmeta-accent: #c8891d;
+  --omicsmeta-rose: #a24c64;
+}
+
+.md-header,
+.md-tabs {
+  box-shadow: none;
+}
+
+.md-main__inner {
+  margin-top: 1.2rem;
+}
+
+.md-typeset h1,
+.md-typeset h2 {
+  color: var(--omicsmeta-ink);
+  letter-spacing: 0;
+}
+
+.md-typeset .hero {
+  margin: -0.8rem 0 1.8rem;
+  padding: 2rem 2rem;
+  border: 1px solid var(--omicsmeta-line);
+  border-radius: 8px;
+  background: var(--omicsmeta-surface);
+  border-left: 0.35rem solid var(--md-primary-fg-color);
+}
+
+.md-typeset .hero__content {
+  max-width: 48rem;
+}
+
+.md-typeset .eyebrow {
+  margin: 0 0 0.7rem;
+  color: var(--omicsmeta-rose);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.md-typeset .hero h1 {
+  margin: 0;
+  font-size: 3rem;
+  line-height: 1.08;
+}
+
+.md-typeset .hero__lede {
+  max-width: 42rem;
+  margin: 1rem 0 1.4rem;
+  color: var(--omicsmeta-muted);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.md-typeset .hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 0;
+}
+
+.md-typeset .md-button {
+  border-radius: 8px;
+}
+
+.md-typeset .feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 2rem;
+}
+
+.md-typeset .feature-card {
+  display: block;
+  min-height: 8rem;
+  padding: 1rem;
+  border: 1px solid var(--omicsmeta-line);
+  border-radius: 8px;
+  color: var(--omicsmeta-ink);
+  background: #ffffff;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.md-typeset .feature-card:hover {
+  border-color: var(--md-accent-fg-color);
+  box-shadow: 0 10px 28px rgba(21, 35, 31, 0.08);
+  transform: translateY(-1px);
+}
+
+.md-typeset .feature-card strong,
+.md-typeset .feature-card span {
+  display: block;
+}
+
+.md-typeset .feature-card strong {
+  margin-bottom: 0.45rem;
+  font-size: 0.95rem;
+}
+
+.md-typeset .feature-card span {
+  color: var(--omicsmeta-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+@media screen and (max-width: 44.9844em) {
+  .md-typeset .hero {
+    margin-top: 0;
+    padding: 1.4rem 1rem;
+  }
+
+  .md-typeset .hero h1 {
+    font-size: 2.2rem;
+    line-height: 1.08;
+  }
+
+  .md-typeset .hero__actions {
+    display: grid;
+  }
+
+  .md-typeset .hero__actions .md-button {
+    width: 100%;
+    text-align: center;
+  }
+}
