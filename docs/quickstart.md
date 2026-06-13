@@ -1,14 +1,42 @@
 # Quickstart
 
-## Install for development
+This page shows the shortest path from installation to harmonized metadata
+tables. It assumes no prior knowledge of the repository.
+
+## Install From PyPI
+
+Install the current pre-alpha release:
 
 ```bash
-python -m pip install -e ".[dev]"
+python -m pip install omicsmeta
 ```
 
-## Harmonize a tabular metadata file
+Check that the command-line interface is available:
 
-Input files can be CSV or TSV. The first row must contain column names.
+```bash
+omicsmeta --help
+```
+
+For an isolated command-line install, `pipx install omicsmeta` is also a good
+option if `pipx` is available on your system.
+
+## Create A Tiny Input File
+
+`omicsmeta` reads CSV or TSV files with column names in the first row. The
+column names do not need to be standardized, but useful names such as
+`species`, `tissue`, `disease`, `cell line`, and `sex` help the field detector.
+
+```bash
+cat > metadata.tsv <<'EOF'
+sample_id,species,tissue,disease,cell line,sex
+sample_1,Homo sapiens,lung,NSCLC,A549,female
+sample_2,Homo sapiens,breast,breast cancer,MCF-7,female
+EOF
+```
+
+## Harmonize The File
+
+Run the default offline mapper and write the main output tables:
 
 ```bash
 omicsmeta harmonize metadata.tsv \
@@ -19,9 +47,22 @@ omicsmeta harmonize metadata.tsv \
   --report qc_report.html
 ```
 
-## Fetch metadata from GEO
+The command produces:
 
-Use `--geo-accession` to fetch SOFT metadata directly from GEO.
+- `harmonized.tsv`: accepted ontology mappings with confidence scores and
+  source-column provenance.
+- `unmapped.tsv`: candidate terms that were not accepted automatically.
+- `unmapped_summary.tsv`: deduplicated review terms, useful for manual curation.
+- `samples.tsv`: one row per sample with sample-wide ontology columns.
+- `qc_report.html`: a compact HTML summary of mapping rates and warnings.
+
+The built-in mapper covers common demonstration terms and works without network
+access. For real projects, add managed ontology resources or local OBO files as
+described below.
+
+## Fetch Metadata From GEO
+
+Use `--geo-accession` to fetch GEO SOFT metadata directly from NCBI GEO:
 
 ```bash
 omicsmeta harmonize \
@@ -33,45 +74,71 @@ omicsmeta harmonize \
   --report qc_report.html
 ```
 
-## Read BioSample or SRA XML
+Network access is required for direct GEO fetching. If you already have a SOFT
+snippet on disk, use `--input-type geo_soft`.
 
-Use `--input-type biosample_xml` or `--input-type sra_xml` for XML exports that
-contain BioSample attributes or SRA `SAMPLE_ATTRIBUTE` blocks:
+## Read BioSample Or SRA XML
+
+Use `--input-type biosample_xml` for NCBI BioSample XML exports:
 
 ```bash
 omicsmeta harmonize biosample.xml \
   --input-type biosample_xml \
   --output harmonized.tsv \
   --unmapped unmapped.tsv \
+  --unmapped-summary-output unmapped_summary.tsv \
+  --sample-output samples.tsv \
   --report qc_report.html
 ```
 
-## Outputs
+Use `--input-type sra_xml` for SRA XML files that contain `SAMPLE` and
+`SAMPLE_ATTRIBUTE` blocks:
 
-- `harmonized.tsv`: accepted ontology mappings with confidence scores
-- `unmapped.tsv`: terms below the confidence threshold for review
-- `unmapped_summary.tsv`: deduplicated unmapped terms prioritized for manual curation
-- `samples.tsv`: one row per sample with sample-wide ontology columns
-- `qc_report.html`: mapping rates and validation warning summaries
+```bash
+omicsmeta harmonize sra.xml \
+  --input-type sra_xml \
+  --output harmonized.tsv \
+  --unmapped unmapped.tsv \
+  --unmapped-summary-output unmapped_summary.tsv \
+  --sample-output samples.tsv \
+  --report qc_report.html
+```
 
-See `examples/basic/` for a small input file and expected mappings.
+## Add Ontology Resources
 
-Column routing is conservative for vague fields. For example, a GEO
-`phenotype` column is only routed to disease when the values contain disease
-evidence; otherwise, the terms stay unmapped for review instead of being forced
-into an ontology.
+List managed ontology resources:
 
-Recognized cell lines can add inferred species, tissue, and disease terms when
-those fields are missing. Inferred records are marked with `backend=inference`
-and include `inferred_from` provenance in the detailed output.
+```bash
+omicsmeta ontologies list
+```
 
-## Mapper backends
+Download selected OBO resources and build a local SQLite synonym index:
 
-The built-in backend is the default and works offline for common terms. The
-optional `text2term` backend is intended for broader ontology mapping once the
-dependency and ontology sources are configured.
+```bash
+omicsmeta ontologies download doid uberon cl
+omicsmeta ontologies index --resource doid --resource uberon --resource cl
+```
 
-Add local OBO files to the built-in backend with `--ontology-obo`:
+Use cached resources during harmonization:
+
+```bash
+omicsmeta harmonize metadata.tsv \
+  --ontology-resource doid \
+  --ontology-resource uberon \
+  --ontology-resource cl \
+  --output harmonized.tsv \
+  --unmapped unmapped.tsv \
+  --unmapped-summary-output unmapped_summary.tsv \
+  --sample-output samples.tsv \
+  --report qc_report.html
+```
+
+By default, resources are stored under `~/.cache/omicsmeta/ontologies`. Use
+`--cache-dir` with `omicsmeta ontologies download` or `omicsmeta ontologies
+index` to choose another cache location, and use `--ontology-cache-dir` with
+`omicsmeta harmonize` to read from that location.
+
+You can also load local OBO files directly:
 
 ```bash
 omicsmeta harmonize metadata.tsv \
@@ -82,37 +149,6 @@ omicsmeta harmonize metadata.tsv \
   --sample-output samples.tsv \
   --report qc_report.html
 ```
-
-## Managed Ontology Resources
-
-List known resources and cache selected OBO files:
-
-```bash
-omicsmeta ontologies list
-omicsmeta ontologies download doid uberon cl
-```
-
-Build a SQLite synonym index from cached resources:
-
-```bash
-omicsmeta ontologies index --resource doid --resource uberon
-```
-
-Use cached resources during harmonization:
-
-```bash
-omicsmeta harmonize metadata.tsv \
-  --ontology-resource doid \
-  --ontology-resource uberon \
-  --output harmonized.tsv \
-  --unmapped unmapped.tsv \
-  --unmapped-summary-output unmapped_summary.tsv \
-  --sample-output samples.tsv \
-  --report qc_report.html
-```
-
-By default, resources are stored under `~/.cache/omicsmeta/ontologies`. Use
-`--ontology-cache-dir` or `--cache-dir` to choose another location.
 
 ## Batch Harmonization
 
@@ -132,25 +168,6 @@ omicsmeta batch \
 Batch outputs include a `batch_source` column so rows can be traced back to
 their input file or accession.
 
-## Benchmark A Fixture
-
-Compare accepted mappings to a known-answer table:
-
-```bash
-python scripts/benchmark_mapping.py \
-  --input examples/basic/metadata.tsv \
-  --truth examples/basic/expected_harmonized.tsv \
-  --output-json benchmark.json
-```
-
-Run all bundled known-answer cases:
-
-```bash
-python scripts/benchmark_mapping.py \
-  --manifest benchmarks/known_answer_suite.tsv \
-  --output-json benchmark_suite.json
-```
-
 ## Python API
 
 Use the API when harmonization is part of a larger workflow:
@@ -159,11 +176,27 @@ Use the API when harmonization is part of a larger workflow:
 from omicsmeta.core.harmonizer import Harmonizer
 
 result = Harmonizer(confidence_threshold=0.70).from_file(
-    "examples/basic/metadata.tsv",
+    "metadata.tsv",
     file_type="tabular",
 )
+
 print(result.qc_summary)
+print(result.sample_table)
 ```
 
 See the [API reference](api.md) for result objects, mapper backends, and output
 writers.
+
+## Development Install
+
+Use the editable install only when working from a source checkout:
+
+```bash
+git clone https://github.com/qchiujunhao/omicsmeta.git
+cd omicsmeta
+python -m pip install -e ".[dev,docs]"
+python -m pytest
+```
+
+The repository includes `examples/basic/` and `benchmarks/` fixtures for local
+development, documentation checks, and known-answer benchmark runs.

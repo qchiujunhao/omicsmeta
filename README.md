@@ -26,7 +26,39 @@ Current implementation status:
 - batch harmonization
 - known-answer benchmark helper and CLI script
 
-Example:
+## Install
+
+Install the published package from PyPI:
+
+```bash
+python -m pip install omicsmeta
+```
+
+Confirm the command-line interface is available:
+
+```bash
+omicsmeta --help
+```
+
+For contributor setup from a source checkout, install the development extras:
+
+```bash
+python -m pip install -e ".[dev,docs]"
+```
+
+## Quick Use
+
+Create a small CSV or TSV metadata table:
+
+```bash
+cat > metadata.tsv <<'EOF'
+sample_id,species,tissue,disease,cell line,sex
+sample_1,Homo sapiens,lung,NSCLC,A549,female
+sample_2,Homo sapiens,breast,breast cancer,MCF-7,female
+EOF
+```
+
+Harmonize the file and write reviewable output tables:
 
 ```bash
 omicsmeta harmonize metadata.tsv \
@@ -118,14 +150,14 @@ python scripts/benchmark_mapping.py \
 
 ## Maturity
 
-This repository is pre-alpha and not yet JOSS-ready. The implemented code is
-tested, but the project still needs publication-scale curated benchmarks,
-release packaging, external user feedback, and Galaxy Tool Shed validation
-before submission.
+This repository is pre-alpha and not yet JOSS-ready. Version `0.1.0` is
+published on PyPI for early testing, but the project still needs
+publication-scale curated benchmarks, external user feedback, and Galaxy Tool
+Shed validation before submission.
 
 Run tests locally with:
 
 ```bash
-python -m pip install -e ".[dev]"
+python -m pip install -e ".[dev,docs]"
 python -m pytest
 ```

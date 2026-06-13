@@ -22,7 +22,7 @@ behavior and calls out limitations where the roadmap is not complete.
 <div class="feature-grid">
   <a class="feature-card" href="quickstart/">
     <strong>Run metadata harmonization</strong>
-    <span>Install the package, harmonize local files, and export mapped and unmapped review tables.</span>
+    <span>Install from PyPI, harmonize local files, and export mapped and unmapped review tables.</span>
   </a>
   <a class="feature-card" href="api/">
     <strong>Use the Python API</strong>

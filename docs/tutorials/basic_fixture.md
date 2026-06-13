@@ -1,12 +1,19 @@
 # Tutorial: Harmonize the Basic Fixture
 
 This tutorial uses the small fixture in `examples/basic/` to show the full local
-workflow without requiring network access.
+workflow without requiring network access. Run it from a clone of the
+`omicsmeta` repository so the example files are available.
 
 ## Install
 
 ```bash
-python -m pip install -e ".[dev]"
+python -m pip install omicsmeta
+```
+
+If you are editing the repository, install from the source checkout instead:
+
+```bash
+python -m pip install -e ".[dev,docs]"
 ```
 
 ## Run Harmonization
