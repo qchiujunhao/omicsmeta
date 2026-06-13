@@ -51,7 +51,7 @@ def parse_biosample_xml(text: str) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     for biosample in _iter_tag(root, "BioSample"):
         row: dict[str, str] = {}
-        accession = biosample.attrib.get("accession") or _first_descendant_text(biosample, "Id")
+        accession = _biosample_accession(biosample)
         if accession:
             row["sample_id"] = accession.strip()
             row["biosample_accession"] = accession.strip()
@@ -91,7 +91,11 @@ def parse_sra_xml(text: str) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     for sample in _iter_tag(root, "SAMPLE"):
         row: dict[str, str] = {}
-        accession = sample.attrib.get("accession") or sample.attrib.get("alias")
+        accession = (
+            sample.attrib.get("accession")
+            or _first_descendant_text(sample, "PRIMARY_ID")
+            or sample.attrib.get("alias")
+        )
         if accession:
             row["sample_id"] = accession.strip()
             row["sra_sample_accession"] = accession.strip()
@@ -156,6 +160,22 @@ def _set_or_append(row: dict[str, str], key: str, value: str) -> None:
         row[key] = value
     elif value and value not in row[key].split("; "):
         row[key] = f"{row[key]}; {value}"
+
+
+def _biosample_accession(biosample: ET.Element) -> str:
+    accession = biosample.attrib.get("accession")
+    if accession:
+        return accession.strip()
+
+    fallback_ids: list[str] = []
+    for identifier in _iter_tag(biosample, "Id"):
+        value = _clean_text(identifier.text)
+        if not value:
+            continue
+        if identifier.attrib.get("db", "").lower() == "biosample":
+            return value
+        fallback_ids.append(value)
+    return fallback_ids[0] if fallback_ids else ""
 
 
 def _iter_tag(element: ET.Element, tag_name: str) -> Iterable[ET.Element]:

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bs:BioSampleSet xmlns:bs="https://www.ncbi.nlm.nih.gov/biosample">
+  <bs:BioSample>
+    <bs:Ids>
+      <bs:Id db="SRA">SRSEDGE001</bs:Id>
+      <bs:Id db="BioSample">SAMNEDGE001</bs:Id>
+    </bs:Ids>
+    <bs:Description>
+      <bs:Title>Namespaced BioSample with repeated attributes</bs:Title>
+      <bs:Organism taxonomy_id="9606">Homo sapiens</bs:Organism>
+    </bs:Description>
+    <bs:Attributes>
+      <bs:Attribute harmonized_name="tissue">blood</bs:Attribute>
+      <bs:Attribute display_name="tissue">peripheral blood</bs:Attribute>
+      <bs:Attribute attribute_name="tissue">blood</bs:Attribute>
+      <bs:Attribute attribute_name="disease">acute myeloid leukemia</bs:Attribute>
+    </bs:Attributes>
+  </bs:BioSample>
+</bs:BioSampleSet>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sra:EXPERIMENT_PACKAGE_SET xmlns:sra="https://www.ncbi.nlm.nih.gov/sra">
+  <sra:EXPERIMENT_PACKAGE>
+    <sra:SAMPLE>
+      <sra:IDENTIFIERS>
+        <sra:PRIMARY_ID>SRSEDGE001</sra:PRIMARY_ID>
+      </sra:IDENTIFIERS>
+      <sra:TITLE>Namespaced SRA sample with primary identifier</sra:TITLE>
+      <sra:SAMPLE_NAME>
+        <sra:TAXON_ID>9606</sra:TAXON_ID>
+        <sra:SCIENTIFIC_NAME>Homo sapiens</sra:SCIENTIFIC_NAME>
+      </sra:SAMPLE_NAME>
+      <sra:SAMPLE_ATTRIBUTES>
+        <sra:SAMPLE_ATTRIBUTE>
+          <sra:TAG>tissue</sra:TAG>
+          <sra:VALUE>blood</sra:VALUE>
+        </sra:SAMPLE_ATTRIBUTE>
+        <sra:SAMPLE_ATTRIBUTE>
+          <sra:TAG>tissue</sra:TAG>
+          <sra:VALUE>peripheral blood</sra:VALUE>
+        </sra:SAMPLE_ATTRIBUTE>
+        <sra:SAMPLE_ATTRIBUTE>
+          <sra:TAG>disease state</sra:TAG>
+          <sra:VALUE>acute myeloid leukemia</sra:VALUE>
+        </sra:SAMPLE_ATTRIBUTE>
+      </sra:SAMPLE_ATTRIBUTES>
+    </sra:SAMPLE>
+  </sra:EXPERIMENT_PACKAGE>
+</sra:EXPERIMENT_PACKAGE_SET>
