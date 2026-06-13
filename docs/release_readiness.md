@@ -7,6 +7,11 @@ checked from a clean checkout.
 This checklist is for validation only. Publishing to PyPI, conda, Bioconda, or
 the Galaxy Tool Shed requires explicit maintainer approval.
 
+The preferred PyPI release path is GitHub Actions Trusted Publishing. Configure
+a PyPI pending publisher for project `omicsmeta` with owner `qchiujunhao`,
+repository `omicsmeta`, workflow `publish.yml`, and environment `pypi`; then
+publish a GitHub release from the verified tag.
+
 ## Required Checks
 
 Run the development test suite and coverage gate:
@@ -47,5 +52,7 @@ omicsmeta --help
   claims made in the documentation and paper.
 - Confirm package metadata, project URLs, license, and citation text are
   accurate.
+- Confirm the PyPI Trusted Publisher or pending publisher is configured before
+  publishing the GitHub release.
 - Confirm Galaxy wrapper validation has been completed before any Tool Shed
   submission.
