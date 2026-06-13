@@ -2,9 +2,9 @@
 
 All notable changes to `omicsmeta` will be documented in this file.
 
-The project is currently pre-alpha and has not published a numbered release.
+The project is currently pre-alpha.
 
-## Unreleased
+## 0.1.0 - 2026-06-13
 
 - Added a Python package scaffold with CLI entry point.
 - Added normalization, field detection, mapping, validation, and harmonization
@@ -22,3 +22,7 @@ The project is currently pre-alpha and has not published a numbered release.
 - Added public documentation, contribution metadata, and a JOSS paper skeleton.
 - Added a Galaxy wrapper scaffold with local wrapper smoke test data.
 - Added package artifact build validation and a release-readiness checklist.
+- Added SRA/BioSample XML edge-case coverage for namespaced documents,
+  repeated attributes, and accession fallbacks.
+- Added GitHub Pages documentation publishing and a Material for MkDocs site
+  theme.
