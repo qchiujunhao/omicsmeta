@@ -108,6 +108,7 @@ python scripts/benchmark_mapping.py \
 
 ## Documentation
 
+- [Documentation site](https://qchiujunhao.github.io/omicsmeta/)
 - [Quickstart](docs/quickstart.md)
 - [API reference](docs/api.md)
 - [Design notes](docs/design.md)

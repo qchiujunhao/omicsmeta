@@ -1,5 +1,6 @@
 site_name: omicsmeta
 site_description: Automated harmonization of public omics metadata
+site_url: https://qchiujunhao.github.io/omicsmeta/
 repo_url: https://github.com/qchiujunhao/omicsmeta
 theme:
   name: mkdocs

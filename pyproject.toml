@@ -43,6 +43,7 @@ omicsmeta = "omicsmeta.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/qchiujunhao/omicsmeta"
+Documentation = "https://qchiujunhao.github.io/omicsmeta/"
 Issues = "https://github.com/qchiujunhao/omicsmeta/issues"
 
 [tool.hatch.version]
