@@ -4,6 +4,14 @@ All notable changes to `omicsmeta` will be documented in this file.
 
 The project is currently pre-alpha.
 
+## 0.1.1 - 2026-06-13
+
+- Updated README and public documentation so PyPI installation is the primary
+  user path.
+- Added a copy-paste first-use metadata example and clarified source-checkout
+  development setup.
+- Avoided duplicate PyPI publish workflow runs for future release events.
+
 ## 0.1.0 - 2026-06-13
 
 - Added a Python package scaffold with CLI entry point.
